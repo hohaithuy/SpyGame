@@ -234,8 +234,14 @@ function getPlayerNames() {
         .filter(name => name.length > 0);
 }
 
+function resizeNamesInput() {
+    textareaNames.style.height = "auto";
+    textareaNames.style.height = `${textareaNames.scrollHeight}px`;
+}
+
 // Auto-updates player names badge
 function updatePlayerCount() {
+    resizeNamesInput();
     const names = getPlayerNames();
     countBadge.textContent = `${names.length} người`;
     validateConfig();

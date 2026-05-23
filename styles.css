@@ -195,6 +195,7 @@ textarea {
     flex-grow: 1;
     height: auto;
     min-height: 120px;
+    overflow: hidden;
     background: rgba(7, 11, 19, 0.5);
     border: 1px solid var(--panel-border);
     border-radius: 16px;
@@ -564,12 +565,12 @@ textarea:focus {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 24px;
-    flex-grow: 1;
-    height: 0;
-    min-height: 150px;
-    overflow-y: auto;
-    padding-right: 2px;
+    margin-bottom: 0;
+    flex-grow: 0;
+    height: auto;
+    min-height: 0;
+    overflow-y: visible;
+    padding-right: 0;
 }
 
 .speaker-row {
@@ -718,11 +719,11 @@ textarea:focus {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 20px;
-    flex-grow: 1;
-    height: 0;
-    min-height: 150px;
-    overflow-y: auto;
+    margin-bottom: 0;
+    flex-grow: 0;
+    height: auto;
+    min-height: 0;
+    overflow-y: visible;
 }
 
 .summary-row {
@@ -777,7 +778,7 @@ textarea:focus {
 
 /* Footer branding */
 footer {
-    margin-top: 16px;
+    margin-top: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -824,7 +825,7 @@ footer a {
     }
 
     textarea {
-        min-height: 100px;
+        min-height: 160px;
         height: auto;
     }
 
@@ -859,15 +860,15 @@ footer a {
     }
 
     .speaking-list {
-        min-height: 150px;
+        min-height: 0;
         max-height: none;
-        margin-bottom: 16px;
+        margin-bottom: 0;
     }
 
     .summary-list {
-        min-height: 150px;
+        min-height: 0;
         max-height: none;
-        margin-bottom: 16px;
+        margin-bottom: 0;
     }
 
     .timer-container {
@@ -927,17 +928,17 @@ footer a {
     }
 
     textarea {
-        min-height: 80px;
+        min-height: 120px;
         height: auto;
     }
 
     .speaking-list {
-        min-height: 120px;
+        min-height: 0;
         max-height: none;
     }
 
     .summary-list {
-        min-height: 120px;
+        min-height: 0;
         max-height: none;
     }
 }
@@ -1012,12 +1013,12 @@ footer a {
     }
 
     .speaking-list {
-        min-height: 220px;
+        min-height: 0;
         max-height: none;
     }
 
     .summary-list {
-        min-height: 200px;
+        min-height: 0;
         max-height: none;
     }
 
