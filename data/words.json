@@ -1,0 +1,2319 @@
+{
+  "version": "2.0",
+  "language": "vi",
+  "description": "Mỗi cluster chứa 4-8 từ liên quan. App random chọn 2 từ từ cluster — 1 cho dân, 1 cho gián điệp.",
+  "categories": [
+    {
+      "id": "food_vn",
+      "name": "Món Việt",
+      "icon": "🍜",
+      "clusters": [
+        {
+          "id": "food_vn_01",
+          "theme": "Món nước",
+          "words": [
+            "Phở bò",
+            "Bún bò",
+            "Hủ tiếu",
+            "Bún riêu",
+            "Mì Quảng",
+            "Bánh canh"
+          ]
+        },
+        {
+          "id": "food_vn_02",
+          "theme": "Món cuốn",
+          "words": [
+            "Gỏi cuốn",
+            "Nem cuốn",
+            "Bánh cuốn",
+            "Chả cuốn",
+            "Bì cuốn"
+          ]
+        },
+        {
+          "id": "food_vn_03",
+          "theme": "Các loại cơm",
+          "words": [
+            "Cơm tấm",
+            "Cơm rang",
+            "Cơm gà",
+            "Cơm nếp",
+            "Cơm cháy"
+          ]
+        },
+        {
+          "id": "food_vn_04",
+          "theme": "Bánh mặn",
+          "words": [
+            "Bánh mì",
+            "Bánh bao",
+            "Bánh giò",
+            "Bánh chưng",
+            "Bánh xèo",
+            "Bánh da lợn",
+            "Bánh pía"
+          ]
+        },
+        {
+          "id": "food_vn_05",
+          "theme": "Bánh ngọt & chè",
+          "words": [
+            "Chè đậu",
+            "Chè chuối",
+            "Chè kho",
+            "Bánh gai",
+            "Rau câu",
+            "Chè trôi"
+          ]
+        },
+        {
+          "id": "food_vn_06",
+          "theme": "Nướng & chiên",
+          "words": [
+            "Thịt nướng",
+            "Cá nướng",
+            "Gà chiên",
+            "Cá chiên",
+            "Khoai chiên",
+            "Đậu chiên",
+            "Tôm chiên"
+          ]
+        },
+        {
+          "id": "food_vn_07",
+          "theme": "Đồ ăn vặt",
+          "words": [
+            "Bánh tráng",
+            "Xúc xích",
+            "Trứng vịt",
+            "Bánh gối",
+            "Đậu phộng",
+            "Bánh đậu"
+          ]
+        },
+        {
+          "id": "food_vn_08",
+          "theme": "Xôi & cháo",
+          "words": [
+            "Xôi",
+            "Cháo",
+            "Xôi đậu",
+            "Xôi mặn",
+            "Xôi đỗ",
+            "Cháo lòng",
+            "Cháo gà"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drinks",
+      "name": "Đồ uống",
+      "icon": "🥤",
+      "clusters": [
+        {
+          "id": "drinks_01",
+          "theme": "Cà phê",
+          "words": [
+            "Bạc xỉu",
+            "Cà phê đen",
+            "Cà phê sữa",
+            "Phin sữa đá",
+            "Cappuccino",
+            "Cold brew"
+          ]
+        },
+        {
+          "id": "drinks_02",
+          "theme": "Trà",
+          "words": [
+            "Trà đá",
+            "Trà xanh",
+            "Trà đen",
+            "Trà gừng",
+            "Trà chanh",
+            "Long nhãn"
+          ]
+        },
+        {
+          "id": "drinks_03",
+          "theme": "Nước ép / Sinh tố",
+          "words": [
+            "Cam vắt",
+            "Nước chanh",
+            "Sinh tố bơ",
+            "Bưởi ép",
+            "Rau má xanh",
+            "Nước ép dưa"
+          ]
+        },
+        {
+          "id": "drinks_04",
+          "theme": "Sữa",
+          "words": [
+            "Sữa hộp",
+            "Sữa tươi",
+            "Sữa đặc",
+            "Sữa chua",
+            "Sữa bắp",
+            "Sữa đậu"
+          ]
+        },
+        {
+          "id": "drinks_05",
+          "theme": "Đồ uống có cồn",
+          "words": [
+            "Bia lon",
+            "Rượu vang",
+            "Rượu vodka",
+            "Rượu bai",
+            "Rượu nếp",
+            "Soju"
+          ]
+        },
+        {
+          "id": "drinks_06",
+          "theme": "Nước ngọt có ga",
+          "words": [
+            "Cocacola",
+            "Sprite",
+            "7up",
+            "Fanta",
+            "Pepsi"
+          ]
+        },
+        {
+          "id": "drinks_07",
+          "theme": "Đồ uống trend",
+          "words": [
+            "Trà sữa",
+            "Trà đào",
+            "Nước detox",
+            "Cà phê sữa",
+            "Trà sữa trân châu",
+            "Nước ép táo"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fruits",
+      "name": "Trái cây",
+      "icon": "🍎",
+      "clusters": [
+        {
+          "id": "fruits_01",
+          "theme": "Trái cây nhiệt đới Việt Nam",
+          "words": [
+            "xoài",
+            "mít",
+            "chôm chôm",
+            "sầu riêng",
+            "thanh long"
+          ]
+        },
+        {
+          "id": "fruits_02",
+          "theme": "Cam, quýt, bưởi",
+          "words": [
+            "cam",
+            "quýt",
+            "bưởi",
+            "chanh",
+            "tắc"
+          ]
+        },
+        {
+          "id": "fruits_03",
+          "theme": "Trái cây ôn đới",
+          "words": [
+            "táo",
+            "nho",
+            " lê",
+            "đào",
+            "mận",
+            "vải"
+          ]
+        },
+        {
+          "id": "fruits_04",
+          "theme": "Các loại dưa",
+          "words": [
+            "dưa hấu",
+            "dưa leo",
+            "dưa gang",
+            "dưa đỏ",
+            "dưa chuột"
+          ]
+        },
+        {
+          "id": "fruits_05",
+          "theme": "Berry, quả mọng nước",
+          "words": [
+            "dâu tây",
+            "việt quất",
+            "mâm xôi",
+            "sung",
+            "vải thiều"
+          ]
+        },
+        {
+          "id": "fruits_06",
+          "theme": "Trái cây mùa hè Việt Nam",
+          "words": [
+            "vải",
+            "xoài",
+            "chôm chôm",
+            "măng cụt",
+            "thanh long",
+            "mít"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "animals",
+      "name": "Động vật",
+      "icon": "🐾",
+      "clusters": [
+        {
+          "id": "animals_01",
+          "theme": "Họ mèo lớn",
+          "words": [
+            "Sư tử",
+            "Hổ cọp",
+            "Báo hoa",
+            "Báo đốm",
+            "Báo tuyết",
+            "Mèo rừng"
+          ]
+        },
+        {
+          "id": "animals_02",
+          "theme": "Họ chó và sói",
+          "words": [
+            "Chó phố",
+            "Chó sói",
+            "Cáo đỏ",
+            "Cáo bạc",
+            "Chó cỏ",
+            "Sói xám"
+          ]
+        },
+        {
+          "id": "animals_03",
+          "theme": "Động vật dưới nước",
+          "words": [
+            "Cá lóc",
+            "Cá thát lát",
+            "Cá rô",
+            "Cá trắm",
+            "Cá mè",
+            "Cá hồi",
+            "Lươn nước"
+          ]
+        },
+        {
+          "id": "animals_04",
+          "theme": "Côn trùng",
+          "words": [
+            "Bướm phượng",
+            "Kiến lửa",
+            "Dế mèn",
+            "Bọ cạp",
+            "Châu chấu",
+            "Ong bắp cày"
+          ]
+        },
+        {
+          "id": "animals_05",
+          "theme": "Các loại chim",
+          "words": [
+            "Vẹt xanh",
+            "Cu gáy",
+            "Gà lôi",
+            "Công lông",
+            "Chim sẻ",
+            "Đại bàng",
+            "Hải âu"
+          ]
+        },
+        {
+          "id": "animals_06",
+          "theme": "Gặm nhấm nhỏ",
+          "words": [
+            "Chuột nhắt",
+            "Chuột đồng",
+            "Chuột cống",
+            "Thỏ cảnh",
+            "Hamster",
+            "Chuột lang"
+          ]
+        },
+        {
+          "id": "animals_07",
+          "theme": "Bò sát",
+          "words": [
+            "Rắn hổ mang",
+            "Thằn lằn",
+            "Cá sấu",
+            "Kỳ nhông",
+            "Rắn cạp nong",
+            "Rùa biển",
+            "Rùa nước"
+          ]
+        },
+        {
+          "id": "animals_08",
+          "theme": "Gia súc nuôi",
+          "words": [
+            "Bò thịt",
+            "Bò sữa",
+            "Heo rừng",
+            "Dê núi",
+            "Trâu nước",
+            "Cừu Merino"
+          ]
+        },
+        {
+          "id": "animals_09",
+          "theme": "Linh trưởng và khỉ",
+          "words": [
+            "Khỉ đột",
+            "Đười ươi",
+            "Khỉ mặt chó",
+            "Voi châu Phi",
+            "Vượn cáo",
+            "Tinh tinh"
+          ]
+        },
+        {
+          "id": "animals_10",
+          "theme": "Động vật biển",
+          "words": [
+            "Cá mập",
+            "Cá heo",
+            "Cá voi",
+            "Cá kiếm",
+            "Cá nhám",
+            "Mực ống",
+            "Hải cẩu"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "places",
+      "name": "Địa điểm",
+      "icon": "🏖️",
+      "clusters": [
+        {
+          "id": "places_01",
+          "theme": "Nơi học tập",
+          "words": [
+            "Trường học",
+            "Thư viện",
+            "Phòng thí",
+            "Giảng đường",
+            "Trung tâm ngoại ngữ",
+            "Trường mầm non",
+            "Cơ sở đào tạo"
+          ]
+        },
+        {
+          "id": "places_02",
+          "theme": "Y tế",
+          "words": [
+            "Bệnh viện",
+            "Phòng khám",
+            "Quầy thuốc",
+            "Viện tim",
+            "Viện da liễu",
+            "Phòng cấp cứu",
+            "Trạm y tế"
+          ]
+        },
+        {
+          "id": "places_03",
+          "theme": "Mua sắm",
+          "words": [
+            "Siêu thị",
+            "Trung tâm thương mại",
+            "Cửa hàng",
+            "Cửa hiệu",
+            "Khu chợ",
+            "Cơ sở bán buôn",
+            "Chợ"
+          ]
+        },
+        {
+          "id": "places_04",
+          "theme": "Lưu trú / Du lịch",
+          "words": [
+            "Khách sạn",
+            "Nhà nghỉ",
+            "Biệt thự",
+            "Homestay",
+            "Khu nghỉ",
+            "Resort",
+            "Lodge"
+          ]
+        },
+        {
+          "id": "places_05",
+          "theme": "Ăn uống",
+          "words": [
+            "Nhà hàng",
+            "Quán ăn",
+            "Quán cà phê",
+            "Cửa hàng bánh",
+            "Quán trà",
+            "Quán nhậu",
+            "Quán bún"
+          ]
+        },
+        {
+          "id": "places_06",
+          "theme": "Giải trí / Vui chơi",
+          "words": [
+            "Rạp chiếu",
+            "Công viên",
+            "Bảo tàng",
+            "Sân vận động",
+            "Karaoke",
+            "Câu lạc bộ",
+            "Sòng bạc"
+          ]
+        },
+        {
+          "id": "places_07",
+          "theme": "Cơ quan hành chính",
+          "words": [
+            "Tòa nhà",
+            "Văn phòng",
+            "Sở giao thông",
+            "Ủy ban nhân dân",
+            "Trung tâm hành chính",
+            "Sở tài chính",
+            "Tổng cục thuế"
+          ]
+        },
+        {
+          "id": "places_08",
+          "theme": "Làm đẹp / Chăm sóc",
+          "words": [
+            "Salon tóc",
+            "Spa",
+            "Viện thẩm mỹ",
+            "Tiệm nail",
+            "Trung tâm làm đẹp",
+            "Tiệm cắt tóc",
+            "Phòng gym"
+          ]
+        },
+        {
+          "id": "places_09",
+          "theme": "Tôn giáo / Tâm linh",
+          "words": [
+            "Chùa",
+            "Nhà thờ",
+            "Miếu nghĩ",
+            "Thánh đường",
+            "Tu viện",
+            "Trung tâm tâm linh",
+            "Nhà nguyện"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transport",
+      "name": "Phương tiện",
+      "icon": "🚗",
+      "clusters": [
+        {
+          "id": "transport_01",
+          "theme": "Xe đường bộ cá nhân",
+          "words": [
+            "Ô tô",
+            "Xe máy",
+            "Xe đạp",
+            "Xe điện",
+            "Xe buýt",
+            "Xe tải",
+            "Xe đạp điện"
+          ]
+        },
+        {
+          "id": "transport_02",
+          "theme": "Dịch vụ gọi xe",
+          "words": [
+            "Grab",
+            "Be",
+            "Gojek",
+            "Taxi",
+            "Xe ôm",
+            "Xe công nghệ"
+          ]
+        },
+        {
+          "id": "transport_03",
+          "theme": "Phương tiện đường dài",
+          "words": [
+            "Máy bay",
+            "Tàu hỏa",
+            "Xe khách",
+            "Tàu cao tốc",
+            "Xe giường nằm",
+            "Xe du lịch"
+          ]
+        },
+        {
+          "id": "transport_04",
+          "theme": "Đường thủy",
+          "words": [
+            "Tàu thuyền",
+            "Phà",
+            "Ca nô",
+            "Thuyền máy",
+            "Xuồng máy",
+            "Thuyền buồm",
+            "Tàu cá"
+          ]
+        },
+        {
+          "id": "transport_05",
+          "theme": "Xe khẩn cấp / Đặc biệt",
+          "words": [
+            "Xe cứu thương",
+            "Xe cứu hỏa",
+            "Cảnh sát",
+            "Xe tang",
+            "Xe chở tiền",
+            "Xe quân sự",
+            "Xe kéo"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "objects",
+      "name": "Đồ vật",
+      "icon": "🔧",
+      "clusters": [
+        {
+          "id": "objects_01",
+          "theme": "Dụng cụ viết",
+          "words": [
+            "Bút máy",
+            "Bút bi",
+            "Bút chì",
+            "Cục tẩy",
+            "Sổ tay"
+          ]
+        },
+        {
+          "id": "objects_02",
+          "theme": "Đồ nhà bếp/ăn uống",
+          "words": [
+            "Nồi cơm",
+            "Chảo rán",
+            "Dao thớt",
+            "Muỗng đũa",
+            "Bát đĩa"
+          ]
+        },
+        {
+          "id": "objects_03",
+          "theme": "Đồ nằm/ngồi",
+          "words": [
+            "Giường ngủ",
+            "Gối nằm",
+            "Đệm mút",
+            "Võng nằm",
+            "Chăn bông"
+          ]
+        },
+        {
+          "id": "objects_04",
+          "theme": "Đồ đội/đeo trên người",
+          "words": [
+            "Mũ nón",
+            "Kính mắt",
+            "Khăn quàng",
+            "Dây chuyền",
+            "Nhẫn vàng"
+          ]
+        },
+        {
+          "id": "objects_05",
+          "theme": "Đồ tắm rửa",
+          "words": [
+            "Vòi hoa sen",
+            "Khăn tắm",
+            "Xà phòng",
+            "Lược tóc",
+            "Bồn tắm"
+          ]
+        },
+        {
+          "id": "objects_06",
+          "theme": "Dụng cụ cắt",
+          "words": [
+            "Dao bếp",
+            "Kéo cắt",
+            "Búa nhỏ",
+            "Cưa tay",
+            "Lưỡi dao"
+          ]
+        },
+        {
+          "id": "objects_07",
+          "theme": "Đồ chiếu sáng",
+          "words": [
+            "Đèn bàn",
+            "Đèn pin",
+            "Nến thắp",
+            "Đèn ngủ",
+            "Đèn pin"
+          ]
+        },
+        {
+          "id": "objects_08",
+          "theme": "Túi/hộp chứa đồ",
+          "words": [
+            "Túi xách",
+            "Hộp cơm",
+            "Vali",
+            "Túi nilon",
+            "Thùng rác"
+          ]
+        },
+        {
+          "id": "objects_09",
+          "theme": "Đồ dọn dẹp nhà cửa",
+          "words": [
+            "Chổi quét",
+            "Cây lau",
+            "Cái hót",
+            "Khăn lau",
+            "Nước rửa"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tech",
+      "name": "Công nghệ",
+      "icon": "📱",
+      "clusters": [
+        {
+          "id": "tech_01",
+          "theme": "Thiết bị cá nhân",
+          "words": [
+            "Điện thoại",
+            "Máy tính",
+            "Laptop",
+            "Tablet",
+            "Đồng hồ"
+          ]
+        },
+        {
+          "id": "tech_02",
+          "theme": "Thiết bị âm thanh",
+          "words": [
+            "Tai nghe",
+            "Loa bluetooth",
+            "Micro",
+            "Soundbar",
+            "Karaoke"
+          ]
+        },
+        {
+          "id": "tech_03",
+          "theme": "Mạng xã hội",
+          "words": [
+            "Facebook",
+            "TikTok",
+            "YouTube",
+            "Instagram",
+            "Twitter"
+          ]
+        },
+        {
+          "id": "tech_04",
+          "theme": "Ứng dụng nhắn tin",
+          "words": [
+            "Zalo",
+            "Messenger",
+            "Telegram",
+            "WhatsApp",
+            "Messages"
+          ]
+        },
+        {
+          "id": "tech_05",
+          "theme": "Streaming & Phim",
+          "words": [
+            "YouTube",
+            "Netflix",
+            "Spotify",
+            "TV online",
+            "Phim online"
+          ]
+        },
+        {
+          "id": "tech_06",
+          "theme": "Phụ kiện điện thoại",
+          "words": [
+            "Ốp lưng",
+            "Cáp sạc",
+            "Sạc dự phòng",
+            "Dán màn hình",
+            "Gậy chụp"
+          ]
+        },
+        {
+          "id": "tech_07",
+          "theme": "Mua sắm online",
+          "words": [
+            "Shopee",
+            "Lazada",
+            "Tiki",
+            "Bán hàng",
+            "Mua sắm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "professions",
+      "name": "Nghề nghiệp",
+      "icon": "💼",
+      "clusters": [
+        {
+          "id": "professions_01",
+          "theme": "Y tế",
+          "words": [
+            "Bác sĩ",
+            "Y tá",
+            "Dược sĩ",
+            "Nha sĩ",
+            "Hộ lý",
+            "Kỹ thuật viên"
+          ]
+        },
+        {
+          "id": "professions_02",
+          "theme": "Giáo dục",
+          "words": [
+            "Giáo viên",
+            "Hiệu trưởng",
+            "Giáo sư",
+            "Thầy giáo",
+            "Cô giáo",
+            "Người hướng dẫn"
+          ]
+        },
+        {
+          "id": "professions_03",
+          "theme": "Pháp luật & An ninh",
+          "words": [
+            "Thẩm phán",
+            "Luật sư",
+            "Kiểm sát viên",
+            "Cảnh sát",
+            "Quân nhân",
+            "Thư ký",
+            "Thám tử"
+          ]
+        },
+        {
+          "id": "professions_04",
+          "theme": "Nghệ thuật & Biểu diễn",
+          "words": [
+            "Đạo diễn",
+            "Ca sĩ",
+            "Nhạc công",
+            "Họa sĩ",
+            "Vũ công",
+            "Diễn viên"
+          ]
+        },
+        {
+          "id": "professions_05",
+          "theme": "Nhà bếp & Ẩm thực",
+          "words": [
+            "Đầu bếp",
+            "Thợ làm bánh",
+            "Bartender",
+            "Barista",
+            "Phụ bếp",
+            "Thợ chế biến"
+          ]
+        },
+        {
+          "id": "professions_06",
+          "theme": "Xây dựng & Kỹ thuật",
+          "words": [
+            "Kỹ sư",
+            "Kiến trúc sư",
+            "Thợ điện",
+            "Thợ mộc",
+            "Thợ xây",
+            "Thợ sơn",
+            "Giám sát công trường"
+          ]
+        },
+        {
+          "id": "professions_07",
+          "theme": "Công nghệ thông tin",
+          "words": [
+            "Lập trình viên",
+            "Quản trị mạng",
+            "Kiểm thử phần mềm",
+            "Kỹ thuật viên",
+            "Nhà phát triển game",
+            "Nhà thiết kế đồ họa",
+            "Chuyên viên an ninh mạng"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sports",
+      "name": "Thể thao",
+      "icon": "⚽",
+      "clusters": [
+        {
+          "id": "sports_01",
+          "theme": "Môn bóng",
+          "words": [
+            "Bóng đá",
+            "Bóng rổ",
+            "Cầu lông",
+            "Bóng bàn",
+            "Bóng chuyền",
+            "Quần vợt"
+          ]
+        },
+        {
+          "id": "sports_02",
+          "theme": "Môn dùng vợt",
+          "words": [
+            "Cầu lông",
+            "Bóng bàn",
+            "Quần vợt",
+            "Pickleball",
+            "Squash"
+          ]
+        },
+        {
+          "id": "sports_03",
+          "theme": "Thể thao dưới nước",
+          "words": [
+            "Bơi lội",
+            "Lặn biển",
+            "Lướt ván",
+            "Chèo thuyền",
+            "Bóng nước"
+          ]
+        },
+        {
+          "id": "sports_04",
+          "theme": "Võ thuật / Đối kháng",
+          "words": [
+            "Karate",
+            "Taekwondo",
+            "Muay Thai",
+            "Judo",
+            "Đấm bốc",
+            "Đấu vật"
+          ]
+        },
+        {
+          "id": "sports_05",
+          "theme": "Cờ và trí tuệ",
+          "words": [
+            "Cờ tướng",
+            "Cờ vua",
+            "Cờ ca-rô",
+            "Tiến lên",
+            "Phỏm"
+          ]
+        },
+        {
+          "id": "sports_06",
+          "theme": "Hoạt động ngoài trời",
+          "words": [
+            "Leo núi",
+            "Cắm trại",
+            "Đạp xe",
+            "Đi bộ",
+            "Nhảy dù"
+          ]
+        },
+        {
+          "id": "sports_07",
+          "theme": "Thể thao mùa đông",
+          "words": [
+            "Trượt tuyết",
+            "Trượt băng",
+            "Trượt ván",
+            "Đua xe",
+            "Đấu kiếm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "entertainment",
+      "name": "Giải trí",
+      "icon": "🎬",
+      "clusters": [
+        {
+          "id": "entertainment_01",
+          "theme": "Game mobile phổ biến",
+          "words": [
+            "Liên Quân",
+            "Free Fire",
+            "Minecraft",
+            "Genshin",
+            "Pubg Mobile",
+            "Candy Crush"
+          ]
+        },
+        {
+          "id": "entertainment_02",
+          "theme": "Game PC",
+          "words": [
+            "Liên Minh",
+            "GTA V",
+            "Pubg",
+            "Diablo",
+            "Minecraft",
+            "Counter Strike",
+            "Valorant"
+          ]
+        },
+        {
+          "id": "entertainment_03",
+          "theme": "Siêu anh hùng Marvel/DC",
+          "words": [
+            "Iron Man",
+            "Spider-Man",
+            "Batman",
+            "Superman",
+            "Captain America",
+            "Thor",
+            "Hulk"
+          ]
+        },
+        {
+          "id": "entertainment_04",
+          "theme": "Anime nổi tiếng",
+          "words": [
+            "Dragon Ball",
+            "Detective Conan",
+            "Naruto",
+            "One Piece",
+            "Sailor Moon",
+            "Doraemon"
+          ]
+        },
+        {
+          "id": "entertainment_05",
+          "theme": "Boardgame",
+          "words": [
+            "Cờ tướng",
+            "Cờ vua",
+            "Mèo nhảy",
+            "UNO",
+            "Ludo",
+            "Scrabble"
+          ]
+        },
+        {
+          "id": "entertainment_06",
+          "theme": "Phim Việt Nam nổi tiếng",
+          "words": [
+            "Hai Phượng",
+            "Em chưa",
+            "Đất rừng",
+            "Tuyệt đỉnh",
+            "Bạn gái",
+            "Kẻ trộm",
+            "Đời phiêu"
+          ]
+        },
+        {
+          "id": "entertainment_07",
+          "theme": "Phim hoạt hình Disney",
+          "words": [
+            "Vua sư tử",
+            "Nàng tiên cá",
+            "Người đẹp",
+            "Aladdin",
+            "Frozen",
+            "Moana",
+            "Toy Story"
+          ]
+        },
+        {
+          "id": "entertainment_08",
+          "theme": "Nhạc cụ",
+          "words": [
+            "Guitar",
+            "Piano",
+            "Violin",
+            "Trống",
+            "Sáo",
+            "Organ",
+            "Xylophone"
+          ]
+        },
+        {
+          "id": "entertainment_09",
+          "theme": "Thể loại nhạc",
+          "words": [
+            "Pop",
+            "Rock",
+            "Ballad",
+            "Hip-hop",
+            "EDM",
+            "Jazz",
+            "Nhạc cổ"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "people",
+      "name": "Con người",
+      "icon": "👥",
+      "clusters": [
+        {
+          "id": "people_01",
+          "theme": "Gia đình ruột thịt",
+          "words": [
+            "Bố mẹ",
+            "Anh chị",
+            "Con cái",
+            "Ông bà",
+            "Cháu gái",
+            "Cháu trai"
+          ]
+        },
+        {
+          "id": "people_02",
+          "theme": "Quan hệ xã hội",
+          "words": [
+            "Thầy cô",
+            "Bạn bè",
+            "Hàng xóm",
+            "Đồng nghiệp",
+            "Cô chú",
+            "Bác họ"
+          ]
+        },
+        {
+          "id": "people_03",
+          "theme": "Nhân vật huyền thoại",
+          "words": [
+            "Anh hùng",
+            "Nữ hoàng",
+            "Long vương",
+            "Ẩn sĩ",
+            "Tiên công"
+          ]
+        },
+        {
+          "id": "people_04",
+          "theme": "Sinh vật siêu nhiên",
+          "words": [
+            "Thần tiên",
+            "Quỷ dữ",
+            "Phù thủy",
+            "Oán thần",
+            "Vampire"
+          ]
+        },
+        {
+          "id": "people_05",
+          "theme": "Người có quyền lực",
+          "words": [
+            "Quân vương",
+            "Thủ tướng",
+            "Tổng thống",
+            "Chủ tịch",
+            "Quan quyền",
+            "Giáo chủ"
+          ]
+        },
+        {
+          "id": "people_06",
+          "theme": "Giai đoạn cuộc đời",
+          "words": [
+            "Trẻ sơ sinh",
+            "Thiếu niên",
+            "Thanh niên",
+            "Trung niên",
+            "Người già",
+            "Thanh xuân"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nature",
+      "name": "Thiên nhiên",
+      "icon": "🌿",
+      "clusters": [
+        {
+          "id": "nature_01",
+          "theme": "Hiện tượng thời tiết",
+          "words": [
+            "Mưa rào",
+            "Mưa phùn",
+            "Sương mù",
+            "Giông tố",
+            "Bão tố",
+            "Nắng chang"
+          ]
+        },
+        {
+          "id": "nature_02",
+          "theme": "Thiên thể trên trời",
+          "words": [
+            "Mặt trăng",
+            "Mặt trời",
+            "Sao hôm",
+            "Sao mai",
+            "Ngân hà",
+            "Tinh vân"
+          ]
+        },
+        {
+          "id": "nature_03",
+          "theme": "Dạng nước tự nhiên",
+          "words": [
+            "Sông hồ",
+            "Biển cả",
+            "Bờ biển",
+            "Thác nước",
+            "Suối nước",
+            "Ao hồ"
+          ]
+        },
+        {
+          "id": "nature_04",
+          "theme": "Địa hình",
+          "words": [
+            "Núi non",
+            "Đồi núi",
+            "Đồng bằng",
+            "Thung lũng",
+            "Bờ biển",
+            "Sông hồ"
+          ]
+        },
+        {
+          "id": "nature_05",
+          "theme": "Các loại hoa",
+          "words": [
+            "Hoa hồng",
+            "Hoa cúc",
+            "Hoa sen",
+            "Hoa lan",
+            "Hoa nhài",
+            "Hoa đào"
+          ]
+        },
+        {
+          "id": "nature_06",
+          "theme": "Cây cối",
+          "words": [
+            "Cây bàng",
+            "Cây sấu",
+            "Cây phượng",
+            "Cây bạc hà",
+            "Cây chanh",
+            "Cây xoài"
+          ]
+        },
+        {
+          "id": "nature_07",
+          "theme": "Thiên tai",
+          "words": [
+            "Lũ lụt",
+            "Hạn hán",
+            "Động đất",
+            "Bão tố",
+            "Cháy rừng",
+            "Lở núi"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clothing",
+      "name": "Thời trang",
+      "icon": "👗",
+      "clusters": [
+        {
+          "id": "clothing_01",
+          "theme": "Các loại áo",
+          "words": [
+            "áo phông",
+            "áo thun",
+            "áo len",
+            "áo khoác",
+            "áo đôi",
+            "áo dệt kim",
+            "áo croptop"
+          ]
+        },
+        {
+          "id": "clothing_02",
+          "theme": "Quần và váy",
+          "words": [
+            "quần dài",
+            "quần short",
+            "quần legging",
+            "quần jean",
+            "váy ngắn",
+            "váy maxi",
+            "chân váy"
+          ]
+        },
+        {
+          "id": "clothing_03",
+          "theme": "Giày dép",
+          "words": [
+            "giày thể thao",
+            "giày cao gót",
+            "giày sandal",
+            "giày mules",
+            "giày boot"
+          ]
+        },
+        {
+          "id": "clothing_04",
+          "theme": "Phụ kiện",
+          "words": [
+            "mũ nón",
+            "kính mát",
+            "khăn choàng",
+            "găng tay",
+            "đồng hồ",
+            "nhẫn cưới",
+            "lắc tay"
+          ]
+        },
+        {
+          "id": "clothing_05",
+          "theme": "Chất liệu vải",
+          "words": [
+            "vải cotton",
+            "vải nỉ",
+            "lụa tơ tằm",
+            "vải len",
+            "vải denim",
+            "vải rayon",
+            "vải satin"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "school",
+      "name": "Trường học",
+      "icon": "📚",
+      "clusters": [
+        {
+          "id": "school_01",
+          "theme": "Môn học",
+          "words": [
+            "Toán",
+            "Văn",
+            "Anh",
+            "Lý",
+            "Hóa",
+            "Sử",
+            "Sinh"
+          ]
+        },
+        {
+          "id": "school_02",
+          "theme": "Dụng cụ học tập",
+          "words": [
+            "Tẩy",
+            "Bút",
+            "Vở",
+            "Thước",
+            "Cặp",
+            "Sách",
+            "Bảng"
+          ]
+        },
+        {
+          "id": "school_03",
+          "theme": "Hoạt động trường",
+          "words": [
+            "Thi",
+            "Lao",
+            "Chơi",
+            "Học",
+            "Thể",
+            "Du",
+            "Đi"
+          ]
+        },
+        {
+          "id": "school_04",
+          "theme": "Con người",
+          "words": [
+            "Thầy",
+            "Cô",
+            "Học",
+            "Trò",
+            "Hiệu",
+            "Bảo"
+          ]
+        },
+        {
+          "id": "school_05",
+          "theme": "Phòng/khu vực",
+          "words": [
+            "Thư",
+            "Phòng",
+            "Căng",
+            "Sân",
+            "Khu",
+            "Lớp"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emotions",
+      "name": "Cảm xúc",
+      "icon": "😊",
+      "clusters": [
+        {
+          "id": "emotions_01",
+          "theme": "Cảm xúc vui",
+          "words": [
+            "Vui vẻ",
+            "Hạnh phúc",
+            "Phấn khích",
+            "Hứng khởi",
+            "Vui mừng",
+            "Hân hoan"
+          ]
+        },
+        {
+          "id": "emotions_02",
+          "theme": "Cảm xúc buồn",
+          "words": [
+            "Buồn bã",
+            "Thất vọng",
+            "Chán nản",
+            "Tuyệt vọng",
+            "Đau buồn"
+          ]
+        },
+        {
+          "id": "emotions_03",
+          "theme": "Cảm xúc lo sợ",
+          "words": [
+            "Lo lắng",
+            "Sợ hãi",
+            "Hoảng sợ",
+            "Bất an",
+            "Lo sợ"
+          ]
+        },
+        {
+          "id": "emotions_04",
+          "theme": "Tính cách tích cực",
+          "words": [
+            "Tốt bụng",
+            "Thông minh",
+            "Chăm chỉ",
+            "Trung thực",
+            "Dũng cảm",
+            "Kiên nhẫn"
+          ]
+        },
+        {
+          "id": "emotions_05",
+          "theme": "Tính cách tiêu cực",
+          "words": [
+            "Kiêu ngạo",
+            "Ích kỷ",
+            "Gian dối",
+            "Lười biếng",
+            "Độc ác",
+            "Đố kỵ"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vegetables",
+      "name": "Rau củ",
+      "icon": "🥬",
+      "clusters": [
+        {
+          "id": "vegetables_01",
+          "theme": "Rau lá xanh",
+          "words": [
+            "cải bó xôi",
+            "rau muống",
+            "xà lách",
+            "cải thìa",
+            "rau dền",
+            "rau ngót"
+          ]
+        },
+        {
+          "id": "vegetables_02",
+          "theme": "Củ",
+          "words": [
+            "khoai tây",
+            "cà rốt",
+            "khoai lang",
+            "củ cải",
+            "khoai môn",
+            "bí đỏ"
+          ]
+        },
+        {
+          "id": "vegetables_03",
+          "theme": "Quả dùng nấu ăn",
+          "words": [
+            "cà chua",
+            "bí ngòi",
+            "ớt chuông",
+            "khổ qua",
+            "me chua",
+            "chanh dây"
+          ]
+        },
+        {
+          "id": "vegetables_04",
+          "theme": "Rau thơm / Gia vị tươi",
+          "words": [
+            "húng quế",
+            "rau mùi",
+            "hành lá",
+            "ngò gai",
+            "rau răm",
+            "sả xay"
+          ]
+        },
+        {
+          "id": "vegetables_05",
+          "theme": "Đậu / Hạt",
+          "words": [
+            "đậu xanh",
+            "đậu đỏ",
+            "đậu phộng",
+            "đậu nành",
+            "đậu trắng",
+            "mướp đắng"
+          ]
+        },
+        {
+          "id": "vegetables_06",
+          "theme": "Nấm các loại",
+          "words": [
+            "nấm rơm",
+            "nấm mèo",
+            "nấm bào nhĩ",
+            "nấm kim châm",
+            "nấm đùi gà"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spices",
+      "name": "Gia vị & Nước chấm",
+      "icon": "🧂",
+      "clusters": [
+        {
+          "id": "spices_01",
+          "theme": "Gia vị khô",
+          "words": [
+            "Tiêu đen",
+            "Bột ngọt",
+            "Bột nghệ",
+            "Hạt tiêu",
+            "Nghệ khô",
+            "Rau mùi"
+          ]
+        },
+        {
+          "id": "spices_02",
+          "theme": "Nước chấm & sốt",
+          "words": [
+            "Nước mắm",
+            "Tương ớt",
+            "Sốt cà",
+            "Sốt me",
+            "Nước sốt",
+            "Tương đen",
+            "Mè rang"
+          ]
+        },
+        {
+          "id": "spices_03",
+          "theme": "Đường, muối, dầu",
+          "words": [
+            "Đường trắng",
+            "Muối hột",
+            "Dầu ăn",
+            "Dầu phộng",
+            "Đường phèn",
+            "Bột canh",
+            "Đường cát"
+          ]
+        },
+        {
+          "id": "spices_04",
+          "theme": "Gia vị Tết & đặc biệt",
+          "words": [
+            "Củ cải",
+            "Hạt sen",
+            "Mứt dừa",
+            "Mứt gừng",
+            "Nghệ tươi",
+            "Hành khô",
+            "Mè đen"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "countries",
+      "name": "Quốc gia",
+      "icon": "🌍",
+      "clusters": [
+        {
+          "id": "countries_01",
+          "theme": "Đông Nam Á",
+          "words": [
+            "Việt Nam",
+            "Thái Lan",
+            "Campuchia",
+            "Myanmar",
+            "Malaysia",
+            "Singapore",
+            "Indonesia"
+          ]
+        },
+        {
+          "id": "countries_02",
+          "theme": "Đông Á",
+          "words": [
+            "Nhật Bản",
+            "Hàn Quốc",
+            "Trung Quốc",
+            "Đài Loan"
+          ]
+        },
+        {
+          "id": "countries_03",
+          "theme": "Châu Âu phổ biến",
+          "words": [
+            "Anh",
+            "Pháp",
+            "Đức",
+            "Ý",
+            "Nga",
+            "Tây Ban Nha",
+            "Hà Lan"
+          ]
+        },
+        {
+          "id": "countries_04",
+          "theme": "Châu Mỹ",
+          "words": [
+            "Hoa Kỳ",
+            "Brazil",
+            "Mexico",
+            "Colombia",
+            "Peru",
+            "Chile",
+            "Argentina"
+          ]
+        },
+        {
+          "id": "countries_05",
+          "theme": "Trung Đông / Nam Á",
+          "words": [
+            "Ấn Độ",
+            "Thổ Nhĩ Kỳ",
+            "Ai Cập",
+            "Israel",
+            "Saudi Arabia",
+            "Pakistan"
+          ]
+        },
+        {
+          "id": "countries_06",
+          "theme": "Châu Phi",
+          "words": [
+            "Ai Cập",
+            "Nam Phi",
+            "Nigeria",
+            "Kenya",
+            "Cameroon",
+            "Ethiopia",
+            "Ghana"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vn_cities",
+      "name": "Địa danh Việt Nam",
+      "icon": "🇻🇳",
+      "clusters": [
+        {
+          "id": "vn_cities_01",
+          "theme": "Thành phố lớn",
+          "words": [
+            "Hà Nội",
+            "Đà Nẵng",
+            "Sài Gòn",
+            "Hải Phòng",
+            "Cần Thơ",
+            "Cà Mau"
+          ]
+        },
+        {
+          "id": "vn_cities_02",
+          "theme": "Biển đảo",
+          "words": [
+            "Nha Trang",
+            "Phú Quốc",
+            "Vũng Tàu",
+            "Quy Nhơn",
+            "Phan Thiết"
+          ]
+        },
+        {
+          "id": "vn_cities_03",
+          "theme": "Vùng cao",
+          "words": [
+            "Đà Lạt",
+            "Sa Pa",
+            "Mộc Châu",
+            "Pleiku",
+            "Bảo Lộc"
+          ]
+        },
+        {
+          "id": "vn_cities_04",
+          "theme": "Miền Tây",
+          "words": [
+            "Cần Thơ",
+            "Bến Tre",
+            "Châu Đốc",
+            "Vĩnh Long",
+            "Trà Vinh",
+            "Bạc Liêu",
+            "Sóc Trăng"
+          ]
+        },
+        {
+          "id": "vn_cities_05",
+          "theme": "Di tích",
+          "words": [
+            "Thành Huế",
+            "Hội An",
+            "Mỹ Sơn",
+            "Phố cổ",
+            "Tràng An",
+            "Vĩnh Tràng"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "holidays",
+      "name": "Lễ hội & Ngày lễ",
+      "icon": "🎊",
+      "clusters": [
+        {
+          "id": "holidays_01",
+          "theme": "Ngày lễ Việt Nam",
+          "words": [
+            "Tết Nguyên Đán",
+            "Giỗ Tổ Hùng Vương",
+            "Tết Trung Thu",
+            "Ngày Giải Phóng",
+            "Quốc Khánh",
+            "Ngày Lao Động"
+          ]
+        },
+        {
+          "id": "holidays_02",
+          "theme": "Ngày lễ quốc tế",
+          "words": [
+            "Giáng Sinh",
+            "Valentine",
+            "Halloween",
+            "Năm Mới",
+            "Trái Đất",
+            "Thế Vận"
+          ]
+        },
+        {
+          "id": "holidays_03",
+          "theme": "Lễ hội truyền thống VN",
+          "words": [
+            "Đại Lễ",
+            "Hội Lim",
+            "Lễ hội",
+            "Xuân Trường",
+            "Hội Chùa",
+            "Cầu Ngương"
+          ]
+        },
+        {
+          "id": "holidays_04",
+          "theme": "Sự kiện đời người",
+          "words": [
+            "Đám Cưới",
+            "Sinh Nhật",
+            "Tang Lễ",
+            "Mừng Thọ",
+            "Kỷ Niệm",
+            "Thôi Nôi"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "appliances",
+      "name": "Đồ gia dụng",
+      "icon": "🏠",
+      "clusters": [
+        {
+          "id": "appliances_01",
+          "theme": "Thiết bị nhà bếp",
+          "words": [
+            "Nồi điện",
+            "Lò nướng",
+            "Máy xay",
+            "Máy pha",
+            "Quạt hút",
+            "Bình đun",
+            "Tủ lạnh"
+          ]
+        },
+        {
+          "id": "appliances_02",
+          "theme": "Thiết bị giặt & sấy",
+          "words": [
+            "Máy giặt",
+            "Máy sấy",
+            "Bàn ủi",
+            "Máy hút",
+            "Phơi khô"
+          ]
+        },
+        {
+          "id": "appliances_03",
+          "theme": "Thiết bị phòng khách",
+          "words": [
+            "Ti vi",
+            "Quạt trần",
+            "Điều hòa",
+            "Máy lọc",
+            "Tủ gỗ",
+            "Kệ sách"
+          ]
+        },
+        {
+          "id": "appliances_04",
+          "theme": "Thiết bị phòng ngủ",
+          "words": [
+            "Đèn ngủ",
+            "Máy sưởi",
+            "Quạt bàn",
+            "Tủ đầu",
+            "Két sắt",
+            "Gương treo"
+          ]
+        },
+        {
+          "id": "appliances_05",
+          "theme": "Thiết bị nhà tắm",
+          "words": [
+            "Bình nóng",
+            "Vòi sen",
+            "Máy sưởi",
+            "Quạt thông",
+            "Máy bơm",
+            "Chậu rửa"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rooms",
+      "name": "Phòng & Không gian",
+      "icon": "🚪",
+      "clusters": [
+        {
+          "id": "rooms_01",
+          "theme": "Phòng trong nhà",
+          "words": [
+            "Phòng ngủ",
+            "Nhà bếp",
+            "Phòng khách",
+            "Phòng tắm",
+            "Phòng ăn",
+            "Gác xép",
+            "Phòng giặt"
+          ]
+        },
+        {
+          "id": "rooms_02",
+          "theme": "Không gian ngoài trời",
+          "words": [
+            "Sân vườn",
+            "Ban công",
+            "Sân thượng",
+            "Hồ bơi",
+            "Vườn hoa",
+            "Hành lang",
+            "Bãi đỗ"
+          ]
+        },
+        {
+          "id": "rooms_03",
+          "theme": "Phòng trong trường & công ty",
+          "words": [
+            "Hội trường",
+            "Thư viện",
+            "Phòng họp",
+            "Căn tin",
+            "Phòng thí nghiệm",
+            "Phòng lãnh đạo"
+          ]
+        },
+        {
+          "id": "rooms_04",
+          "theme": "Phòng trong khách sạn & bệnh viện",
+          "words": [
+            "Sảnh đợi",
+            "Quầy lễ",
+            "Phòng khám",
+            "Phòng mổ",
+            "Giường bệnh",
+            "Phòng trực",
+            "Phòng chờ"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brands",
+      "name": "Thương hiệu",
+      "icon": "🏷️",
+      "clusters": [
+        {
+          "id": "brands_01",
+          "theme": "Xe máy - Ô tô",
+          "words": [
+            "Honda",
+            "Yamaha",
+            "VinFast",
+            "Kia",
+            "Toyota",
+            "Samsung"
+          ]
+        },
+        {
+          "id": "brands_02",
+          "theme": "Thời trang",
+          "words": [
+            "Nike",
+            "Adidas",
+            "Zara",
+            "Converse",
+            "Uniqlo"
+          ]
+        },
+        {
+          "id": "brands_03",
+          "theme": "Đồ ăn nhanh",
+          "words": [
+            "KFC",
+            "Burger King",
+            "Lotteria",
+            "Pizza Hut",
+            "McDonald's"
+          ]
+        },
+        {
+          "id": "brands_04",
+          "theme": "Điện thoại - Laptop",
+          "words": [
+            "Apple",
+            "Xiaomi",
+            "Oppo",
+            "Realme",
+            "Dell"
+          ]
+        },
+        {
+          "id": "brands_05",
+          "theme": "Thương hiệu Việt",
+          "words": [
+            "Vinamilk",
+            "Viettel",
+            "Vinfast",
+            "Masan",
+            "Trung Nguyên"
+          ]
+        },
+        {
+          "id": "brands_06",
+          "theme": "Mỹ phẩm - Chăm sóc",
+          "words": [
+            "Maybelline",
+            "Black Rouge",
+            "Lancome",
+            "The Body Shop",
+            "Cocoon"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "colors_shapes",
+      "name": "Màu sắc & Hình dạng",
+      "icon": "🎨",
+      "clusters": [
+        {
+          "id": "colors_shapes_01",
+          "theme": "Màu nóng",
+          "words": [
+            "Đỏ tươi",
+            "Cam đất",
+            "Vàng cam",
+            "Đỏ rực",
+            "Cam nhạt",
+            "Đỏ thắm",
+            "Vàng rực"
+          ]
+        },
+        {
+          "id": "colors_shapes_02",
+          "theme": "Màu lạnh",
+          "words": [
+            "Xanh biển",
+            "Tím than",
+            "Xanh lá",
+            "Xanh ngọc",
+            "Xanh bạc",
+            "Tím lavender",
+            "Vàng chanh"
+          ]
+        },
+        {
+          "id": "colors_shapes_03",
+          "theme": "Hình dạng",
+          "words": [
+            "Hình tròn",
+            "Hình vuông",
+            "Hình chữ nhật",
+            "Hình tam giác",
+            "Hình ngũ giác",
+            "Hình lục giác",
+            "Hình bầu dục"
+          ]
+        },
+        {
+          "id": "colors_shapes_04",
+          "theme": "Chất liệu bề mặt",
+          "words": [
+            "Bóng loáng",
+            "Sần sùi",
+            "Nhẵn mịn",
+            "Gồ ghề",
+            "Láng mướn",
+            "Phẳng lì",
+            "Rỗ mịn"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "space",
+      "name": "Vũ trụ & Khoa học",
+      "icon": "🚀",
+      "clusters": [
+        {
+          "id": "space_01",
+          "theme": "Thiên thể",
+          "words": [
+            "Mặt Trăng",
+            "Sao Hỏa",
+            "Sao Mộc",
+            "Sao Kim",
+            "Sao Hải Vương"
+          ]
+        },
+        {
+          "id": "space_02",
+          "theme": "Phương tiện vũ trụ",
+          "words": [
+            "Tên Lửa",
+            "Tàu Vũ Trụ",
+            "Vệ Tinh",
+            "Phi Thuyền",
+            "Kính Viễn Vọng"
+          ]
+        },
+        {
+          "id": "space_03",
+          "theme": "Nhà khoa học",
+          "words": [
+            "Einstein",
+            "Newton",
+            "Tesla",
+            "Curie",
+            "Galileo"
+          ]
+        },
+        {
+          "id": "space_04",
+          "theme": "Hiện tượng khoa học",
+          "words": [
+            "Từ Trường",
+            "Hấp Dẫn",
+            "Vũ Trụ",
+            "Lực Hấp",
+            "Năng Lượng"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "body",
+      "name": "Cơ thể người",
+      "icon": "🫀",
+      "clusters": [
+        {
+          "id": "body_01",
+          "theme": "Bộ phận trên mặt",
+          "words": [
+            "đôi mắt",
+            "cái mũi",
+            "đôi môi",
+            "cái trán",
+            "lông mày",
+            "hai má",
+            "cổ họng"
+          ]
+        },
+        {
+          "id": "body_02",
+          "theme": "Bộ phận tay chân",
+          "words": [
+            "bàn tay",
+            "bàn chân",
+            "ngón tay",
+            "ngón chân",
+            "khuỷu tay",
+            "cổ chân",
+            "lòng bàn chân"
+          ]
+        },
+        {
+          "id": "body_03",
+          "theme": "Nội tạng",
+          "words": [
+            "trái tim",
+            "lá gan",
+            "hai phổi",
+            "hai thận",
+            "dạ dày",
+            "ruột già",
+            "ruột non"
+          ]
+        },
+        {
+          "id": "body_04",
+          "theme": "Xương và khớp",
+          "words": [
+            "xương sống",
+            "xương sọ",
+            "xương ức",
+            "xương sườn",
+            "khớp gối",
+            "khớp vai",
+            "khớp khuỷu"
+          ]
+        },
+        {
+          "id": "body_05",
+          "theme": "Tóc da móng",
+          "words": [
+            "tóc mái",
+            "làn da",
+            "móng tay",
+            "móng chân",
+            "lông mi",
+            "răng sữa",
+            "da trắng"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "daily_activities",
+      "name": "Hoạt động hàng ngày",
+      "icon": "🏃",
+      "clusters": [
+        {
+          "id": "daily_activities_01",
+          "theme": "Buổi sáng",
+          "words": [
+            "rửa mặt",
+            "gội đầu",
+            "tỉnh dậy",
+            "ăn sáng",
+            "tắm rửa"
+          ]
+        },
+        {
+          "id": "daily_activities_02",
+          "theme": "Nấu ăn",
+          "words": [
+            "xào rau",
+            "kho cá",
+            "luộc rau",
+            "nấu cơm",
+            "chiên trứng"
+          ]
+        },
+        {
+          "id": "daily_activities_03",
+          "theme": "Dọn dẹp",
+          "words": [
+            "lau nhà",
+            "giặt đồ",
+            "hút bụi",
+            "rửa bát",
+            "phơi quần"
+          ]
+        },
+        {
+          "id": "daily_activities_04",
+          "theme": "Giải trí",
+          "words": [
+            "xem phim",
+            "đọc sách",
+            "nghe nhạc",
+            "chơi game",
+            "xem TV"
+          ]
+        },
+        {
+          "id": "daily_activities_05",
+          "theme": "Di chuyển",
+          "words": [
+            "đi bộ",
+            "chạy xe",
+            "đi xe",
+            "lái xe",
+            "đi bus"
+          ]
+        },
+        {
+          "id": "daily_activities_06",
+          "theme": "Giao tiếp",
+          "words": [
+            "gọi điện",
+            "nhắn tin",
+            "nói chuyện",
+            "gửi mail",
+            "viết thư"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "name": "Âm nhạc",
+      "icon": "🎵",
+      "clusters": [
+        {
+          "id": "music_01",
+          "theme": "Thể loại nhạc",
+          "words": [
+            "Nhạc trẻ",
+            "Nhạc rock",
+            "Nhạc bolero",
+            "Nhạc dance",
+            "Nhạc cổ điển"
+          ]
+        },
+        {
+          "id": "music_02",
+          "theme": "Nhạc cụ dây",
+          "words": [
+            "Đàn tranh",
+            "Đàn bầu",
+            "Guitar",
+            "Violin",
+            "Mandolin"
+          ]
+        },
+        {
+          "id": "music_03",
+          "theme": "Nhạc cụ gõ/thổi",
+          "words": [
+            "Trống cơm",
+            "Sáo trúc",
+            "Kèn harmonica",
+            "Organ",
+            "Shakuhachi"
+          ]
+        },
+        {
+          "id": "music_04",
+          "theme": "Hoạt động âm nhạc",
+          "words": [
+            "Hát hò",
+            "Tập luyện",
+            "Sáng tác",
+            "Soạn nhạc",
+            "Biểu diễn"
+          ]
+        },
+        {
+          "id": "music_05",
+          "theme": "Sự kiện âm nhạc",
+          "words": [
+            "Hòa nhạc",
+            "Lễ hội",
+            "Đêm nhạc",
+            "Ca khúc",
+            "Thi hát"
+          ]
+        }
+      ]
+    }
+  ]
+}

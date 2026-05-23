@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ai là Gián Điệp? | Board Game Host</title>
+    <!-- SEO Optimization -->
+    <meta name="description" content="Một ứng dụng web hosting cao cấp cho trò chơi board game 'Ai là Gián Điệp' (Who is the Spy). Hỗ trợ chơi offline, truyền tay trên 1 điện thoại cực kỳ mượt mà.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="app-container" id="app-shell">
+        
+        <!-- ================= SCREEN 1: SETUP ================= -->
+        <div class="screen active" id="screen-setup">
+            <header>
+                <div class="logo-container">
+                    <span>🕵️</span> SPY GAME
+                </div>
+                <h1>Ai Là Gián Điệp?</h1>
+                <p class="subtitle">Nhập danh sách người chơi để bắt đầu</p>
+            </header>
+
+            <main>
+                <!-- Names input area -->
+                <div class="input-group">
+                    <label for="names-input">
+                        Danh sách người chơi <span class="count-badge" id="names-count">0 người</span>
+                    </label>
+                    <textarea 
+                        id="names-input" 
+                        placeholder="Nhập tên mỗi dòng một người...&#10;Ví dụ:&#10;Anh Nam&#10;Chị Vy&#10;Bảo Nam&#10;Bình Dương"
+                        autocomplete="off" 
+                        spellcheck="false"
+                    ></textarea>
+                </div>
+
+                <!-- Game Configuration Counter controls -->
+                <div class="config-container">
+                    <div class="config-item">
+                        <span class="config-label">🕵️ Gián Điệp</span>
+                        <div class="counter-controls">
+                            <button class="counter-btn" id="spy-minus" type="button">−</button>
+                            <span class="counter-val" id="spy-val">1</span>
+                            <button class="counter-btn" id="spy-plus" type="button">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="config-item">
+                        <span class="config-label">🤍 Dân Trắng</span>
+                        <div class="counter-controls">
+                            <button class="counter-btn" id="blank-minus" type="button">−</button>
+                            <span class="counter-val" id="blank-val">0</span>
+                            <button class="counter-btn" id="blank-plus" type="button">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Validation Alerts -->
+                <div class="warning-message" id="warning-alert">
+                    <span>⚠️</span>
+                    <span id="warning-text">Lỗi thiết lập game</span>
+                </div>
+            </main>
+
+            <footer>
+                <button class="btn btn-primary" id="btn-start" disabled>
+                    <span>🚀</span> Bắt đầu trò chơi
+                </button>
+            </footer>
+        </div>
+
+        <!-- ================= SCREEN 2: PASS & REVEAL ================= -->
+        <div class="screen" id="screen-reveal">
+            <header>
+                <div class="player-turn-banner">
+                    <p class="player-turn-label">Lượt của người chơi</p>
+                    <h2 class="player-turn-name" id="reveal-player-name">Tên Người Chơi</h2>
+                </div>
+                <p class="subtitle" id="reveal-prompt">Hãy bảo mật điện thoại của bạn</p>
+            </header>
+
+            <main class="reveal-center">
+                <!-- 3D Flip Card Widget -->
+                <div class="card-perspective" id="card-container">
+                    <div class="card-inner">
+                        <!-- Card Front (Face Down / Question Mark) -->
+                        <div class="card-face card-front">
+                            <div class="card-pattern-icon">❓</div>
+                            <span class="card-prompt">Nhấn để lật thẻ</span>
+                        </div>
+                        
+                        <!-- Card Back (Face Up / Word & Role) -->
+                        <div class="card-face card-back" id="card-back">
+                            <span class="role-badge" id="card-role-badge">Dân Thường</span>
+                            <div>
+                                <p class="card-word-title">Từ bí mật của bạn</p>
+                                <h3 class="card-word-val" id="card-word-val">Bánh Mì</h3>
+                            </div>
+                            <p class="card-bottom-instruction" id="card-bottom-instruction">
+                                Hãy mô tả khéo léo để tìm ra Gián điệp, tránh Dân trắng phát hiện ra từ!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <button class="btn btn-primary" id="btn-reveal-action">
+                    Xem vai trò bí mật
+                </button>
+            </footer>
+        </div>
+
+        <!-- ================= SCREEN 3: GAMEPLAY BOARD ================= -->
+        <div class="screen" id="screen-play">
+            <header>
+                <h1>Vòng Mô Tả</h1>
+                <p class="subtitle">Lần lượt mô tả từ theo thứ tự bên dưới</p>
+            </header>
+
+            <main class="play-center">
+                <!-- Simple Self-paced Stopwatch Timer -->
+                <div class="timer-container">
+                    <div class="timer-label">
+                        <span>⏱️</span> Thời gian chơi:
+                    </div>
+                    <div class="timer-val" id="timer-val">00:00</div>
+                    <div class="timer-controls">
+                        <button class="timer-ctrl-btn" id="timer-play-btn" title="Chạy">▶</button>
+                        <button class="timer-ctrl-btn" id="timer-pause-btn" style="display:none;" title="Tạm dừng">⏸</button>
+                        <button class="timer-ctrl-btn" id="timer-reset-btn" title="Đặt lại">🔄</button>
+                    </div>
+                </div>
+
+                <div class="play-section-title">
+                    <span>📋 Thứ Tự Nói Chuyện</span>
+                </div>
+
+                <!-- Scrollable speaking list -->
+                <div class="speaking-list" id="speaking-list">
+                    <!-- Loaded dynamically via app.js -->
+                </div>
+            </main>
+
+            <footer>
+                <button class="btn btn-accent-gold" id="btn-end-game">
+                    <span>🔔</span> Kết Thúc & Công Bố
+                </button>
+            </footer>
+        </div>
+
+        <!-- ================= SCREEN 4: SUMMARY & ROUND OVER ================= -->
+        <div class="screen" id="screen-summary">
+            <header>
+                <h1>Công Bố Kết Quả</h1>
+                <p class="subtitle">Đã tiết lộ tất cả vai trò bí mật</p>
+            </header>
+
+            <main class="summary-container">
+                <!-- Topic comparison header -->
+                <div class="topic-header">
+                    <p class="topic-category-tag" id="summary-category">🍿 Giải Trí</p>
+                    <div class="topic-pairs-comparison">
+                        <span style="color: var(--civilian-color);" id="summary-civilian-word">Bánh Mì</span>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">vs</span>
+                        <span style="color: var(--spy-color);" id="summary-spy-word">Bánh Bao</span>
+                    </div>
+                </div>
+
+                <div class="play-section-title">
+                    <span>👥 Vai trò người chơi</span>
+                </div>
+
+                <!-- Scrollable player listing -->
+                <div class="summary-list" id="summary-list">
+                    <!-- Loaded dynamically via app.js -->
+                </div>
+            </main>
+
+            <footer>
+                <button class="btn btn-primary" id="btn-next-round">
+                    <span>🔁</span> Chơi Vòng Tiếp Theo
+                </button>
+            </footer>
+        </div>
+
+        <!-- App Footer branding -->
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

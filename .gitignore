@@ -1,0 +1,11 @@
+.DS_Store
+data/checkpoint.json
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.system_generated/
+.gemini/
+.env
+.env.local
+.env.*
