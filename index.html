@@ -11,6 +11,9 @@
 <body>
 
     <div class="app-container" id="app-shell">
+        <button class="game-settings-btn" id="btn-open-settings" type="button" title="Cài đặt vòng sau" aria-label="Cài đặt vòng sau" hidden>
+            ⚙️
+        </button>
         
         <!-- ================= SCREEN 1: SETUP ================= -->
         <div class="screen active" id="screen-setup">
@@ -36,24 +39,26 @@
                     ></textarea>
                 </div>
 
-                <!-- Game Configuration Counter controls -->
+                <!-- Game role configuration -->
                 <div class="config-container">
                     <div class="config-item">
                         <span class="config-label">🕵️ Gián Điệp</span>
-                        <div class="counter-controls">
-                            <button class="counter-btn" id="spy-minus" type="button">−</button>
+                        <div class="fixed-role-count">
                             <span class="counter-val" id="spy-val">1</span>
-                            <button class="counter-btn" id="spy-plus" type="button">+</button>
+                            <span class="config-hint">Cố định</span>
                         </div>
                     </div>
                     
                     <div class="config-item">
-                        <span class="config-label">🤍 Dân Trắng</span>
-                        <div class="counter-controls">
-                            <button class="counter-btn" id="blank-minus" type="button">−</button>
-                            <span class="counter-val" id="blank-val">0</span>
-                            <button class="counter-btn" id="blank-plus" type="button">+</button>
-                        </div>
+                        <label class="config-label" for="blank-chance">🤍 Dân Trắng</label>
+                        <select class="chance-select" id="blank-chance">
+                            <option value="0">0%</option>
+                            <option value="20">20%</option>
+                            <option value="40">40%</option>
+                            <option value="60">60%</option>
+                            <option value="80">80%</option>
+                            <option value="100">100%</option>
+                        </select>
                     </div>
                 </div>
 
@@ -95,11 +100,11 @@
                         <div class="card-face card-back" id="card-back">
                             <span class="role-badge" id="card-role-badge">Dân Thường</span>
                             <div>
-                                <p class="card-word-title">Từ bí mật của bạn</p>
+                                <p class="card-word-title" id="card-word-title">Từ bí mật của bạn</p>
                                 <h3 class="card-word-val" id="card-word-val">Bánh Mì</h3>
                             </div>
                             <p class="card-bottom-instruction" id="card-bottom-instruction">
-                                Hãy mô tả khéo léo để tìm ra Gián điệp, tránh Dân trắng phát hiện ra từ!
+                                Tìm ra Gián Điệp, nhưng đừng bỏ phiếu loại Dân Trắng!
                             </p>
                         </div>
                     </div>
@@ -117,38 +122,43 @@
         <div class="screen" id="screen-play">
             <header>
                 <h1>Vòng Mô Tả</h1>
-                <p class="subtitle">Lần lượt mô tả từ theo thứ tự bên dưới</p>
+                <p class="subtitle">Tìm Gián Điệp, nhưng đừng bỏ phiếu loại Dân Trắng</p>
             </header>
 
             <main class="play-center">
-                <!-- Simple Self-paced Stopwatch Timer -->
-                <div class="timer-container">
-                    <div class="timer-label">
-                        <span>⏱️</span> Thời gian chơi:
-                    </div>
-                    <div class="timer-val" id="timer-val">00:00</div>
-                    <div class="timer-controls">
-                        <button class="timer-ctrl-btn" id="timer-play-btn" title="Chạy">▶</button>
-                        <button class="timer-ctrl-btn" id="timer-pause-btn" style="display:none;" title="Tạm dừng">⏸</button>
-                        <button class="timer-ctrl-btn" id="timer-reset-btn" title="Đặt lại">🔄</button>
-                    </div>
-                </div>
-
                 <div class="play-section-title">
-                    <span>📋 Thứ Tự Nói Chuyện</span>
+                    <span>📋 Thứ Tự Nói & Bỏ Phiếu</span>
                 </div>
 
-                <!-- Scrollable speaking list -->
                 <div class="speaking-list" id="speaking-list">
                     <!-- Loaded dynamically via app.js -->
                 </div>
             </main>
 
-            <footer>
-                <button class="btn btn-accent-gold" id="btn-end-game">
-                    <span>🔔</span> Kết Thúc & Công Bố
+            <footer class="play-actions">
+                <button class="btn btn-accent-gold" id="btn-spy-claim" type="button">
+                    <span>🕵️</span> Spy đoán từ
                 </button>
             </footer>
+
+            <div class="outcome-overlay" id="outcome-modal" aria-hidden="true">
+                <div class="outcome-dialog" role="dialog" aria-modal="true" aria-labelledby="outcome-title">
+                    <p class="outcome-eyebrow">Diễn biến vòng</p>
+                    <h2 class="outcome-title" id="outcome-title"></h2>
+                    <p class="outcome-message" id="outcome-message"></p>
+                    <div class="spy-claim-actions" id="spy-claim-actions">
+                        <button class="btn btn-accent-gold" id="btn-confirm-spy-claim" type="button">Xác nhận đoán từ</button>
+                        <button class="btn btn-secondary" id="btn-cancel-spy-claim" type="button">Huỷ</button>
+                    </div>
+                    <div class="spy-guess-actions" id="spy-guess-actions">
+                        <button class="btn btn-primary" id="btn-spy-correct" type="button">Đoán đúng</button>
+                        <button class="btn btn-secondary" id="btn-spy-wrong" type="button">Đoán sai</button>
+                    </div>
+                    <button class="btn btn-primary" id="btn-show-summary" type="button">
+                        Xem kết quả &amp; điểm
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- ================= SCREEN 4: SUMMARY & ROUND OVER ================= -->
@@ -169,6 +179,16 @@
                     </div>
                 </div>
 
+                <p class="round-outcome" id="summary-round-outcome"></p>
+
+                <div class="play-section-title">
+                    <span>🏆 Bảng Điểm</span>
+                </div>
+
+                <div class="scoreboard-list" id="scoreboard-list">
+                    <!-- Loaded dynamically via app.js -->
+                </div>
+
                 <div class="play-section-title">
                     <span>👥 Vai trò người chơi</span>
                 </div>
@@ -186,7 +206,52 @@
             </footer>
         </div>
 
-        <!-- App Footer branding -->
+        <div class="settings-overlay" id="settings-modal" aria-hidden="true">
+            <div class="settings-dialog" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+                <div class="settings-heading">
+                    <div>
+                        <p class="outcome-eyebrow">Vòng kế tiếp</p>
+                        <h2 class="settings-title" id="settings-title">Cài đặt trò chơi</h2>
+                    </div>
+                    <button class="settings-close-btn" id="btn-close-settings" type="button" aria-label="Đóng cài đặt">✕</button>
+                </div>
+
+                <label class="settings-label" for="settings-blank-chance">Xác suất có 1 Dân Trắng</label>
+                <select class="chance-select" id="settings-blank-chance">
+                    <option value="0">0%</option>
+                    <option value="20">20%</option>
+                    <option value="40">40%</option>
+                    <option value="60">60%</option>
+                    <option value="80">80%</option>
+                    <option value="100">100%</option>
+                </select>
+
+                <div class="settings-roster-heading">
+                    <span>Người chơi vòng sau</span>
+                    <span class="settings-count" id="settings-active-count"></span>
+                </div>
+                <div class="settings-player-list" id="settings-player-list"></div>
+
+                <form class="settings-add-player" id="settings-add-player-form">
+                    <input class="settings-name-input" id="settings-new-player" type="text" maxlength="30" placeholder="Tên người chơi mới" autocomplete="off">
+                    <button class="settings-add-btn" type="submit">Thêm</button>
+                </form>
+                <p class="settings-message" id="settings-message"></p>
+                <button class="btn btn-primary" id="btn-settings-done" type="button">Xong</button>
+            </div>
+        </div>
+
+        <div class="resume-overlay" id="resume-modal" aria-hidden="true">
+            <div class="resume-dialog" role="dialog" aria-modal="true" aria-labelledby="resume-title">
+                <p class="outcome-eyebrow">Ván đấu đã lưu</p>
+                <h2 class="resume-title" id="resume-title">Tiếp tục chơi?</h2>
+                <p class="resume-message">
+                    Thiết bị này đang lưu một ván chưa kết thúc cùng bảng điểm hiện tại.
+                </p>
+                <button class="btn btn-primary" id="btn-resume-match" type="button">Chơi tiếp ván cũ</button>
+                <button class="btn btn-secondary" id="btn-new-match" type="button">Bắt đầu game mới</button>
+            </div>
+        </div>
 
     </div>
 

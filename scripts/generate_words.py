@@ -5,37 +5,48 @@ Run once: python3 scripts/generate_words.py
 Output: data/words.json
 """
 
+import argparse
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
 import urllib.request
 
-# Try to load TOKEN from environment variables first
-TOKEN = os.environ.get("MINIMAX_API_KEY") or os.environ.get("TOKEN")
-
-# Fallback: Parse .env file if it exists in the workspace
-if not TOKEN:
-    env_path = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env"))
-    if os.path.exists(env_path):
-        try:
-            with open(env_path, "r", encoding="utf-8") as f:
-                for line in f:
-                    line_clean = line.strip()
-                    if line_clean and not line_clean.startswith("#") and "=" in line_clean:
-                        parts = line_clean.split("=", 1)
-                        if parts[0].strip() in ["MINIMAX_API_KEY", "TOKEN"]:
-                            TOKEN = parts[1].strip().strip('"').strip("'")
-                            break
-        except Exception:
-            pass
-
-if not TOKEN:
-    print("[ERROR] MiniMax API Token is missing! Please set the MINIMAX_API_KEY environment variable or define it in a .env file.", file=sys.stderr)
-    sys.exit(1)
+TOKEN = None
 URL = "https://api.minimax.io/anthropic"
 MODEL = "MiniMax-M2.7"
+MIN_WORDS_PER_CLUSTER = 4
+MAX_RETRY_FEEDBACK_ITEMS = 20
+MAX_GENERATION_ATTEMPTS = 5
+VIETNAMESE_LETTERS_PATTERN = re.compile(r"^[A-Za-zÀ-ỹĐđ]+ [A-Za-zÀ-ỹĐđ]+$")
+
+
+def load_token():
+    """Load the MiniMax token only when generation is requested."""
+    token = os.environ.get("MINIMAX_API_KEY") or os.environ.get("TOKEN")
+    if token:
+        return token
+
+    env_path = os.path.normpath(
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")
+    )
+    if not os.path.exists(env_path):
+        return None
+
+    try:
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line_clean = line.strip()
+                if line_clean and not line_clean.startswith("#") and "=" in line_clean:
+                    key, value = line_clean.split("=", 1)
+                    if key.strip() in ["MINIMAX_API_KEY", "TOKEN"]:
+                        return value.strip().strip('"').strip("'")
+    except OSError:
+        return None
+
+    return None
 
 # Define all categories with specific prompts for high-quality Vietnamese word clusters
 CATEGORIES = [
@@ -43,19 +54,19 @@ CATEGORIES = [
         "id": "food_vn",
         "name": "Món Việt",
         "icon": "🍜",
-        "prompt": "Tạo 8 nhóm từ (cluster) về CHỦ ĐỀ: Món ăn Việt Nam. Mỗi nhóm gồm 5-7 từ LIÊN QUAN, CÙNG LOẠI nhưng KHÁC NHAU đủ để mô tả. Ví dụ nhóm 'Nước lèo': [Phở, Bún bò, Hủ tiếu, Bún riêu, Mì Quảng, Bún mắm]. Các nhóm: món nước, món cuốn, các loại cơm, các loại bánh mặn, các loại bánh ngọt/chè, món nướng/chiên, đồ ăn vặt đường phố, các loại xôi/cháo.",
+        "prompt": "Tạo 8 nhóm từ (cluster) về CHỦ ĐỀ: Món ăn Việt Nam. Mỗi nhóm gồm 5-7 cụm tiếng Việt đúng 2 từ, LIÊN QUAN, CÙNG LOẠI nhưng KHÁC NHAU đủ để mô tả. Ví dụ nhóm 'Nước lèo': [Phở bò, Bún bò, Hủ tiếu, Bún riêu, Mì Quảng, Bún mắm]. Các nhóm: món nước, món cuốn, các loại cơm, các loại bánh mặn, các loại bánh ngọt/chè, món nướng/chiên, đồ ăn vặt, món nếp/cháo.",
     },
     {
         "id": "drinks",
         "name": "Đồ uống",
         "icon": "🥤",
-        "prompt": "Tạo 7 nhóm từ về CHỦ ĐỀ: Đồ uống. Mỗi nhóm gồm 5-7 từ tiếng Việt. Các nhóm: các loại cà phê, các loại trà, nước trái cây/sinh tố, các loại sữa, đồ uống có cồn, nước ngọt có ga, đồ uống mới trend (trà sữa, nước ép detox...).",
+        "prompt": "Tạo 7 nhóm từ về CHỦ ĐỀ: Đồ uống. Mỗi nhóm gồm 5-7 cụm tiếng Việt tự nhiên đúng 2 từ. Các nhóm: các loại cà phê, các loại trà, sinh tố, các loại sữa, đồ uống có cồn, nước giải khát, đồ uống thịnh hành (trà sữa, trà đào...).",
     },
     {
         "id": "fruits",
         "name": "Trái cây",
         "icon": "🍎",
-        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Trái cây. Mỗi nhóm gồm 5-7 từ tiếng Việt. Các nhóm: trái cây nhiệt đới Việt Nam, cam/quýt/bưởi, trái cây ôn đới, các loại dưa, các loại berry/mọng nước, trái cây mùa hè Việt Nam.",
+        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Trái cây. Mỗi nhóm gồm 5-7 cụm tiếng Việt tự nhiên đúng 2 từ (ví dụ: xoài cát, thanh long). Các nhóm: trái cây nhiệt đới Việt Nam, quả họ cam, trái cây ôn đới, các loại dưa, quả mọng nước, trái cây mùa hè Việt Nam.",
     },
     {
         "id": "animals",
@@ -85,7 +96,7 @@ CATEGORIES = [
         "id": "tech",
         "name": "Công nghệ",
         "icon": "📱",
-        "prompt": "Tạo 7 nhóm từ về CHỦ ĐỀ: Công nghệ & Mạng xã hội. Mỗi nhóm gồm 5-7 từ. Các nhóm: thiết bị cá nhân, thiết bị âm thanh, mạng xã hội, ứng dụng nhắn tin, nền tảng streaming/xem phim, phụ kiện điện thoại, ứng dụng mua sắm online.",
+        "prompt": "Tạo 7 nhóm từ về CHỦ ĐỀ: Công nghệ & Cuộc sống số. Mỗi nhóm gồm 5-7 cụm từ tiếng Việt. Các nhóm: thiết bị cá nhân, thiết bị âm thanh, hoạt động nhắn tin, nội dung trực tuyến, phụ kiện điện thoại, mua sắm trực tuyến, bảo mật số. Không dùng tên app hoặc thương hiệu.",
     },
     {
         "id": "professions",
@@ -103,7 +114,7 @@ CATEGORIES = [
         "id": "entertainment",
         "name": "Giải trí",
         "icon": "🎬",
-        "prompt": "Tạo 9 nhóm từ về CHỦ ĐỀ: Giải trí & Văn hóa đại chúng. Mỗi nhóm gồm 5-7 từ. Các nhóm: game mobile phổ biến, game PC, siêu anh hùng Marvel/DC, anime nổi tiếng, boardgame, phim Việt Nam nổi tiếng, phim hoạt hình Disney, nhạc cụ, thể loại nhạc.",
+        "prompt": "Tạo 9 nhóm từ về CHỦ ĐỀ: Giải trí. Mỗi nhóm gồm 5-7 cụm từ tiếng Việt. Các nhóm: thể loại phim, hoạt động xem phim, trò chơi dân gian, trò chơi bàn, sân khấu, nhạc cụ, thể loại nhạc, chương trình truyền hình, địa điểm vui chơi. Không dùng tên riêng hoặc tiếng Anh.",
     },
     {
         "id": "people",
@@ -139,37 +150,37 @@ CATEGORIES = [
         "id": "vegetables",
         "name": "Rau củ",
         "icon": "🥬",
-        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Rau củ quả. Mỗi nhóm gồm 5-7 từ tiếng Việt 2 âm tiết. Các nhóm: rau lá xanh (cải bó, rau muống...), củ (khoai tây, cà rốt...), quả dùng nấu ăn (cà chua, bí đỏ...), rau thơm/gia vị tươi (húng quế, rau mùi...), đậu/hạt (đậu xanh, đậu đỏ...), nấm các loại (nấm rơm, nấm mèo...).",
+        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Rau củ quả. Mỗi nhóm gồm 5-7 cụm tiếng Việt tự nhiên đúng 2 từ. Các nhóm: rau lá xanh (cải xanh, rau muống...), củ (khoai tây, cà rốt...), quả dùng nấu ăn (cà chua, bí đỏ...), rau thơm (húng quế, rau mùi...), đậu/hạt (đậu xanh, đậu đỏ...), nấm các loại (nấm rơm, nấm mèo...).",
     },
     {
         "id": "spices",
         "name": "Gia vị & Nước chấm",
         "icon": "🧂",
-        "prompt": "Tạo 4 nhóm từ về CHỦ ĐỀ: Gia vị & Nước chấm Việt Nam. Mỗi nhóm gồm 5-7 từ tiếng Việt 2 âm tiết. Các nhóm: gia vị khô (tiêu đen, bột ngọt...), nước chấm/sốt (nước mắm, tương ớt...), đường/muối/dầu, gia vị Tết/đặc biệt.",
+        "prompt": "Tạo 4 nhóm từ về CHỦ ĐỀ: Gia vị & Nước chấm Việt Nam. Mỗi nhóm gồm 5-7 cụm tiếng Việt tự nhiên đúng 2 từ. Các nhóm: gia vị khô (tiêu đen, bột ngọt...), nước chấm (nước mắm, tương ớt...), gia vị tạo vị, gia vị ngày Tết.",
     },
     {
-        "id": "countries",
-        "name": "Quốc gia",
-        "icon": "🌍",
-        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Quốc gia trên thế giới. Mỗi nhóm gồm 5-7 tên nước (dùng tên tiếng Việt 2 âm tiết, ví dụ: Nhật Bản, Hàn Quốc, Thái Lan). Các nhóm: Đông Nam Á, Đông Á, châu Âu phổ biến, châu Mỹ, Trung Đông/Nam Á, châu Phi.",
+        "id": "scenery",
+        "name": "Danh thắng",
+        "icon": "🏞️",
+        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Danh thắng & Cảnh quan. Mỗi nhóm gồm 5-7 cụm từ tiếng Việt tự nhiên đúng 2 từ. Các nhóm: bãi biển, thác nước, đồi núi, hang động, hồ nước, vườn hoa.",
     },
     {
         "id": "vn_cities",
         "name": "Địa danh Việt Nam",
         "icon": "🇻🇳",
-        "prompt": "Tạo 5 nhóm từ về CHỦ ĐỀ: Địa danh & Thành phố Việt Nam. Mỗi nhóm gồm 5-7 từ 2 âm tiết. Các nhóm: thành phố lớn (Hà Nội, Đà Nẵng...), địa điểm du lịch biển (Nha Trang, Phú Quốc...), vùng cao/núi (Đà Lạt, Sa Pa...), miền Tây (Cần Thơ, Bến Tre...), di tích/danh lam (Huế, Hội An...).",
+        "prompt": "Tạo 5 nhóm từ về CHỦ ĐỀ: Địa danh Việt Nam. Mỗi nhóm gồm 5-7 địa danh tiếng Việt tự nhiên đúng 2 từ. Các nhóm: thành phố, du lịch biển, vùng cao, miền Tây, di tích. Không dùng địa danh một từ.",
     },
     {
         "id": "holidays",
         "name": "Lễ hội & Ngày lễ",
         "icon": "🎊",
-        "prompt": "Tạo 4 nhóm từ về CHỦ ĐỀ: Lễ hội & Ngày lễ. Mỗi nhóm gồm 5-7 từ tiếng Việt 2 âm tiết. Các nhóm: ngày lễ Việt Nam (Tết nguyên, Giỗ tổ...), ngày lễ quốc tế (Giáng sinh, Valentine...), lễ hội truyền thống VN (Hội chùa, Lễ hội...), sự kiện đời người (Đám cưới, sinh nhật...).",
+        "prompt": "Tạo 4 nhóm từ về CHỦ ĐỀ: Lễ hội & Ngày lễ. Mỗi nhóm gồm 5-7 cụm tiếng Việt tự nhiên đúng 2 từ. Các nhóm: ngày lễ Việt Nam, mùa lễ hội, nghi thức truyền thống, sự kiện đời người. Không dùng tên lễ tiếng Anh.",
     },
     {
         "id": "appliances",
         "name": "Đồ gia dụng",
         "icon": "🏠",
-        "prompt": "Tạo 5 nhóm từ về CHỦ ĐỀ: Đồ gia dụng & Thiết bị trong nhà. Mỗi nhóm gồm 5-7 từ tiếng Việt 2 âm tiết. Các nhóm: thiết bị nhà bếp (nồi cơm, lò vi...), thiết bị giặt/sấy, thiết bị phòng khách (ti vi, quạt trần...), thiết bị phòng ngủ, thiết bị nhà tắm.",
+        "prompt": "Tạo 5 nhóm từ về CHỦ ĐỀ: Đồ gia dụng & Thiết bị trong nhà. Mỗi nhóm gồm 5-7 cụm tiếng Việt tự nhiên đúng 2 từ. Các nhóm: thiết bị nấu nướng (nồi cơm, chảo điện...), thiết bị giặt giũ, thiết bị làm mát (quạt trần, quạt đứng...), thiết bị phòng ngủ, thiết bị nhà tắm.",
     },
     {
         "id": "rooms",
@@ -178,10 +189,10 @@ CATEGORIES = [
         "prompt": "Tạo 4 nhóm từ về CHỦ ĐỀ: Phòng & Không gian sống. Mỗi nhóm gồm 5-7 từ tiếng Việt 2 âm tiết. Các nhóm: phòng trong nhà (phòng ngủ, nhà bếp...), không gian ngoài trời (sân vườn, ban công...), phòng trong trường/công ty (hội trường, căn tin...), phòng trong khách sạn/bệnh viện.",
     },
     {
-        "id": "brands",
-        "name": "Thương hiệu",
-        "icon": "🏷️",
-        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Thương hiệu phổ biến ở Việt Nam. Mỗi nhóm gồm 5-7 tên thương hiệu (chọn tên 2 âm tiết). Các nhóm: xe máy/ô tô (Honda, Toyota...), thời trang (Nike, Adidas...), đồ ăn nhanh (McDonald, KFC...), điện thoại/laptop (Apple, Samsung...), thương hiệu Việt (Vinamilk, Viettel...), mỹ phẩm/chăm sóc.",
+        "id": "shopping",
+        "name": "Mua sắm",
+        "icon": "🛍️",
+        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Mua sắm & Dịch vụ. Mỗi nhóm gồm 5-7 cụm từ tiếng Việt. Các nhóm: khu mua sắm, loại cửa hàng, đồ khuyến mãi, cách thanh toán, dịch vụ giao hàng, trải nghiệm mua hàng. Không dùng tên thương hiệu.",
     },
     {
         "id": "colors_shapes",
@@ -193,7 +204,7 @@ CATEGORIES = [
         "id": "space",
         "name": "Vũ trụ & Khoa học",
         "icon": "🚀",
-        "prompt": "Tạo 4 nhóm từ về CHỦ ĐỀ: Vũ trụ & Khoa học. Mỗi nhóm gồm 5-7 từ tiếng Việt 2 âm tiết. Các nhóm: hành tinh/thiên thể (Sao Hỏa, Mặt Trăng...), phương tiện vũ trụ/khoa học (tên lửa, kính viễn...), nhà khoa học/phát minh nổi tiếng, hiện tượng khoa học (từ trường, trọng lực...).",
+        "prompt": "Tạo 4 nhóm từ về CHỦ ĐỀ: Vũ trụ & Khoa học. Mỗi nhóm gồm 5-7 cụm tiếng Việt tự nhiên đúng 2 từ. Các nhóm: thiên thể, dụng cụ quan sát, thí nghiệm, hiện tượng khoa học. Không dùng tên riêng.",
     },
     {
         "id": "body",
@@ -205,13 +216,37 @@ CATEGORIES = [
         "id": "daily_activities",
         "name": "Hoạt động hàng ngày",
         "icon": "🏃",
-        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Hoạt động hàng ngày. Mỗi nhóm gồm 5-7 từ tiếng Việt 2 âm tiết (động từ/cụm động từ). Các nhóm: buổi sáng (đánh răng, tập thể...), nấu ăn (xào rau, kho cá...), dọn dẹp (lau nhà, giặt đồ...), giải trí (xem phim, đọc sách...), di chuyển (đi bộ, chạy xe...), giao tiếp (gọi điện, nhắn tin...).",
+        "prompt": "Tạo 6 nhóm từ về CHỦ ĐỀ: Hoạt động hàng ngày. Mỗi nhóm gồm 5-7 cụm động từ tiếng Việt tự nhiên đúng 2 từ. Các nhóm: buổi sáng (đánh răng, rửa mặt...), nấu ăn (xào rau, kho cá...), dọn dẹp (lau nhà, giặt đồ...), giải trí (xem phim, đọc sách...), di chuyển (đi bộ, chạy xe...), giao tiếp (gọi điện, nhắn tin...).",
     },
     {
         "id": "music",
         "name": "Âm nhạc",
         "icon": "🎵",
-        "prompt": "Tạo 5 nhóm từ về CHỦ ĐỀ: Âm nhạc. Mỗi nhóm gồm 5-7 từ tiếng Việt 2 âm tiết. Các nhóm: thể loại nhạc (nhạc pop, nhạc rock...), nhạc cụ dây (đàn tranh, guitar...), nhạc cụ gõ/thổi (trống cơm, sáo trúc...), hoạt động âm nhạc (hát hò, soạn nhạc...), sự kiện âm nhạc (hòa nhạc, lễ hội...).",
+        "prompt": "Tạo 5 nhóm từ về CHỦ ĐỀ: Âm nhạc. Mỗi nhóm gồm 5-7 cụm tiếng Việt tự nhiên đúng 2 từ. Các nhóm: thể loại nhạc Việt, nhạc cụ dây, nhạc cụ gõ/thổi, hoạt động âm nhạc, sự kiện âm nhạc. Không dùng tên nhạc cụ hoặc thể loại bằng tiếng Anh.",
+    },
+    {
+        "id": "travel",
+        "name": "Du lịch",
+        "icon": "🧳",
+        "prompt": "Tạo 5 nhóm từ về CHỦ ĐỀ: Du lịch. Mỗi nhóm gồm 5-7 cụm từ tiếng Việt đúng 2 từ. Các nhóm: hành lý, đặt phòng, tham quan, trải nghiệm biển, trải nghiệm miền núi.",
+    },
+    {
+        "id": "office",
+        "name": "Văn phòng",
+        "icon": "🗂️",
+        "prompt": "Tạo 5 nhóm từ về CHỦ ĐỀ: Văn phòng & Công việc. Mỗi nhóm gồm 5-7 cụm từ tiếng Việt đúng 2 từ. Các nhóm: bàn làm việc, cuộc họp, giấy tờ, đồng nghiệp, thói quen công sở.",
+    },
+    {
+        "id": "health",
+        "name": "Sức khỏe",
+        "icon": "🩺",
+        "prompt": "Tạo 5 nhóm từ về CHỦ ĐỀ: Sức khỏe & Chăm sóc cơ thể. Mỗi nhóm gồm 5-7 cụm từ tiếng Việt đúng 2 từ. Các nhóm: triệu chứng nhẹ, khám bệnh, thuốc men, tập luyện, nghỉ ngơi.",
+    },
+    {
+        "id": "gardening",
+        "name": "Làm vườn",
+        "icon": "🪴",
+        "prompt": "Tạo 4 nhóm từ về CHỦ ĐỀ: Làm vườn. Mỗi nhóm gồm 5-7 cụm từ tiếng Việt đúng 2 từ. Các nhóm: dụng cụ vườn, loại cây, công việc chăm cây, khu vực trồng cây.",
     },
 ]
 
@@ -223,15 +258,17 @@ LUẬT CHƠI: Mỗi lượt, app chọn ngẫu nhiên 2 từ từ cùng 1 nhóm 
 2. ĐỦ GIỐNG để khi mô tả có thể nhầm lẫn
 3. ĐỦ KHÁC để người chơi giỏi có thể phân biệt qua cách mô tả
 4. PHỔ BIẾN - người Việt Nam ai cũng biết
-5. Dùng tiếng Việt tự nhiên, có thể dùng tên riêng quốc tế nếu phổ biến
+5. Dùng tiếng Việt tự nhiên, không dùng tên thương hiệu hoặc từ tiếng Anh
 
 ⚠️ QUY TẮC BẮT BUỘC VỀ ĐỘ DÀI TỪ:
-- MỖI TỪ PHẢI ĐÚNG 2 ÂM TIẾT (2 từ tiếng Việt), KHÔNG ĐƯỢC 1 từ đơn, KHÔNG ĐƯỢC 3 từ trở lên.
+- MỖI MỤC TRONG "words" PHẢI ĐÚNG 2 TỪ, đếm bằng `len(value.split()) == 2`.
+- Mỗi mục phải là cụm tiếng Việt tự nhiên; không dùng chữ số, ký hiệu, tiếng Anh hoặc tên riêng quốc tế.
+- Mỗi cluster phải có ít nhất 4 mục hợp lệ, không trùng nhau.
 - ✅ ĐÚNG: "Bánh mì", "Xe máy", "Cà phê", "Trà sữa", "Bóng đá", "Hoa hồng"
 - ❌ SAI 1 từ: "Phở", "Bia", "Kem", "Cam", "Nho", "Chuối"
 - ❌ SAI 3+ từ: "Cà phê sữa", "Nước hoa quả", "Xe cứu thương", "Bánh tráng trộn"
-- Nếu từ phổ biến chỉ có 1 âm tiết, hãy thêm từ bổ nghĩa để thành 2 âm tiết (ví dụ: "Phở" → "Phở bò", "Bia" → "Bia lon", "Kem" → "Kem ốc")
-- Luôn luôn là từ tiếng việt, tuyệt đối tránh tiếng Anh để user không bị hiểu nhầm.
+- Nếu từ phổ biến chỉ có 1 từ, hãy thêm từ bổ nghĩa để thành 2 từ (ví dụ: "Phở" → "Phở bò", "Bia" → "Bia lạnh", "Kem" → "Kem lạnh")
+- Một cụm đúng có thể không chứa ký tự mang dấu, ví dụ "Canh chua" hoặc "Thanh long"; tuyệt đối tránh tiếng Anh để user không bị hiểu nhầm.
 
 QUAN TRỌNG: Trả về ĐÚNG định dạng JSON, không thêm text giải thích.
 
@@ -256,6 +293,179 @@ def progress_bar(current, total, width=30):
     bar = "█" * filled + "░" * (width - filled)
     pct = current / total * 100
     return f"[{bar}] {pct:.0f}%"
+
+
+def normalize_phrase(value):
+    """Normalize model spacing while keeping visible Vietnamese content unchanged."""
+    if not isinstance(value, str):
+        return ""
+    return " ".join(value.strip().split())
+
+
+def phrase_validation_error(value):
+    """Return why a phrase is invalid, or None when it is accepted."""
+    normalized = normalize_phrase(value)
+    if len(normalized.split()) != 2:
+        return "không đúng 2 từ"
+    if not all(char.isalpha() or char == " " for char in normalized):
+        return "chứa ký tự không phải chữ tiếng Việt"
+    if not VIETNAMESE_LETTERS_PATTERN.fullmatch(normalized):
+        return "chứa ký tự không phải chữ tiếng Việt"
+    return None
+
+
+def expected_cluster_count(category):
+    """Read the requested count from the category prompt."""
+    match = re.search(r"Tạo\s+(\d+)\s+nhóm", category["prompt"])
+    return int(match.group(1)) if match else 1
+
+
+def clean_generated_cluster(category, cluster_number, clusters, rejection_reasons=None):
+    """Return the first valid generated cluster for one requested cluster id."""
+    if not isinstance(clusters, list):
+        log("    ❌ 'clusters' must be a JSON array")
+        if rejection_reasons is not None:
+            rejection_reasons.append("Trường 'clusters' không phải là một mảng JSON.")
+        return None
+
+    for index, cluster in enumerate(clusters):
+        if not isinstance(cluster, dict) or not isinstance(cluster.get("words"), list):
+            log(f"    ⚠️  Dropping cluster #{index + 1}: invalid structure")
+            if rejection_reasons is not None:
+                rejection_reasons.append(
+                    f"Nhóm #{index + 1} bị loại vì thiếu mảng 'words' hợp lệ."
+                )
+            continue
+
+        words = []
+        seen = set()
+        for value in cluster["words"]:
+            normalized = normalize_phrase(value)
+            reason = phrase_validation_error(normalized)
+            key = normalized.casefold()
+            if reason:
+                log(f"    ⚠️  Rejecting {value!r}: {reason}")
+                if rejection_reasons is not None:
+                    rejection_reasons.append(f"Từ {value!r} bị loại: {reason}.")
+            elif key in seen:
+                log(f"    ⚠️  Rejecting duplicate {normalized!r}")
+                if rejection_reasons is not None:
+                    rejection_reasons.append(f"Từ {normalized!r} bị loại: bị trùng.")
+            else:
+                seen.add(key)
+                words.append(normalized)
+
+        if len(words) < MIN_WORDS_PER_CLUSTER:
+            theme = cluster.get("theme", f"#{index + 1}")
+            log(
+                f"    ⚠️  Dropping cluster {theme!r}: only {len(words)} valid words "
+                f"(need {MIN_WORDS_PER_CLUSTER})"
+            )
+            if rejection_reasons is not None:
+                rejection_reasons.append(
+                    f"Nhóm {theme!r} bị loại: chỉ còn {len(words)} từ hợp lệ, "
+                    f"cần ít nhất {MIN_WORDS_PER_CLUSTER}."
+                )
+            continue
+
+        return {
+            "id": f"{category['id']}_{cluster_number:02d}",
+            "theme": normalize_phrase(cluster.get("theme")) or f"Nhóm {cluster_number}",
+            "words": words,
+        }
+
+    if rejection_reasons is not None:
+        rejection_reasons.append(
+            f"Không có dữ liệu hợp lệ cho id {category['id']}_{cluster_number:02d}."
+        )
+    return None
+
+
+def clean_checkpoint_clusters(category, clusters):
+    """Retain individually valid clusters from a saved topic entry."""
+    if not isinstance(clusters, list):
+        return []
+
+    expected = expected_cluster_count(category)
+    cleaned = []
+    used_numbers = set()
+    for fallback_number, cluster in enumerate(clusters, start=1):
+        match = re.fullmatch(
+            rf"{re.escape(category['id'])}_(\d+)",
+            str(cluster.get("id", "")) if isinstance(cluster, dict) else "",
+        )
+        cluster_number = int(match.group(1)) if match else fallback_number
+        if cluster_number < 1 or cluster_number > expected or cluster_number in used_numbers:
+            continue
+
+        cleaned_cluster = clean_generated_cluster(category, cluster_number, [cluster])
+        if cleaned_cluster is not None:
+            cleaned.append(cleaned_cluster)
+            used_numbers.add(cluster_number)
+
+    return cleaned
+
+
+def validate_word_data(data, source):
+    """Check that every stored phrase follows the runtime generation contract."""
+    violations = []
+    total_words = 0
+    categories = data.get("categories", [])
+    if not isinstance(categories, list) or not categories:
+        violations.append("file does not contain any generated topics")
+        categories = []
+
+    for category in categories:
+        clusters = category.get("clusters", [])
+        if not isinstance(clusters, list) or not clusters:
+            violations.append(f"{category.get('id')}: topic does not contain any clusters")
+            continue
+        for cluster in clusters:
+            words = cluster.get("words", [])
+            if len(words) < MIN_WORDS_PER_CLUSTER:
+                violations.append(
+                    f"{category.get('id')}/{cluster.get('id')}: "
+                    f"cluster has fewer than {MIN_WORDS_PER_CLUSTER} words"
+                )
+            seen = set()
+            for value in words:
+                total_words += 1
+                normalized = normalize_phrase(value)
+                reason = phrase_validation_error(normalized)
+                if reason:
+                    violations.append(
+                        f"{category.get('id')}/{cluster.get('id')}: {value!r} ({reason})"
+                    )
+                elif normalized.casefold() in seen:
+                    violations.append(
+                        f"{category.get('id')}/{cluster.get('id')}: "
+                        f"{normalized!r} (bị trùng)"
+                    )
+                else:
+                    seen.add(normalized.casefold())
+
+    if violations:
+        log(f"❌ {source} failed validation: {len(violations)} issue(s)")
+        for violation in violations[:30]:
+            log(f"    {violation}")
+        if len(violations) > 30:
+            log(f"    ... and {len(violations) - 30} more")
+        return False
+
+    log(f"✅ {source} is valid ({total_words} Vietnamese two-word phrases)")
+    return True
+
+
+def validate_word_file(path):
+    """Validate an existing JSON file without calling the generation API."""
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return validate_word_data(json.load(f), path)
+    except OSError as error:
+        log(f"❌ Could not read {path}: {error}")
+    except json.JSONDecodeError as error:
+        log(f"❌ {path} is not valid JSON: {error}")
+    return False
 
 
 def extract_json(text):
@@ -296,12 +506,43 @@ def extract_json(text):
     )
 
 
-def call_api(category):
-    """Call MiniMax API for a single category."""
+def call_api(
+    category,
+    cluster_number,
+    total_clusters,
+    retry_feedback=None,
+    rejection_reasons=None,
+):
+    """Call MiniMax API for one cluster id within a category."""
+    cluster_id = f"{category['id']}_{cluster_number:02d}"
+    user_prompt = (
+        f"{category['prompt']}\n\n"
+        f"Lần gọi này CHỈ tạo đúng 1 cluster cho id \"{cluster_id}\" "
+        f"(nhóm {cluster_number}/{total_clusters} của chủ đề). "
+        f"Nếu đề bài liệt kê các nhóm gợi ý, dùng nhóm ở vị trí số {cluster_number}. "
+        "Trả về mảng \"clusters\" có đúng 1 phần tử.\n"
+        "Nhắc lại: mọi mục trong mảng words bắt buộc là cụm tiếng Việt tự nhiên "
+        "gồm đúng 2 từ cách nhau bằng khoảng trắng; cụm như \"Canh chua\" là hợp lệ."
+    )
+    if retry_feedback:
+        feedback = "\n".join(
+            f"- {reason}" for reason in retry_feedback[:MAX_RETRY_FEEDBACK_ITEMS]
+        )
+        user_prompt += (
+            "\n\nKết quả lần trước bị validator từ chối vì các lỗi sau:\n"
+            f"{feedback}\n"
+            "Hãy thay các mục lỗi bằng cụm mới hợp lệ; không lặp lại lỗi trên."
+        )
+
     payload = {
         "model": MODEL,
         "max_tokens": 4096,
-        "messages": [{"role": "user", "content": category["prompt"]}],
+        "messages": [
+            {
+                "role": "user",
+                "content": user_prompt,
+            }
+        ],
         "system": SYSTEM_PROMPT,
     }
 
@@ -362,14 +603,9 @@ def call_api(category):
 
         # Parse JSON using the robust extraction helper
         parsed = extract_json(text)
-        clusters = parsed.get("clusters", [])
-
-        # Fix IDs to use the category prefix
-        prefix = category["id"]
-        for i, cluster in enumerate(clusters):
-            cluster["id"] = f"{prefix}_{i + 1:02d}"
-
-        return clusters
+        return clean_generated_cluster(
+            category, cluster_number, parsed.get("clusters", []), rejection_reasons
+        )
 
     except urllib.error.HTTPError as e:
         log(f"    ❌ HTTP Error {e.code}: {e.read().decode()[:200]}")
@@ -383,17 +619,38 @@ def call_api(category):
         return None
 
 
-def call_api_with_retry(category):
-    """Call API with infinite retry and exponential backoff."""
-    attempt = 0
+def call_api_with_retry(category, cluster_number, total_clusters):
+    """Try generating one cluster id a limited number of times."""
     wait = 3  # initial wait seconds
+    retry_feedback = []
+    cluster_id = f"{category['id']}_{cluster_number:02d}"
 
-    while True:
-        attempt += 1
-        clusters = call_api(category)
+    for attempt in range(1, MAX_GENERATION_ATTEMPTS + 1):
+        rejection_reasons = []
+        cluster = call_api(
+            category,
+            cluster_number,
+            total_clusters,
+            retry_feedback,
+            rejection_reasons,
+        )
 
-        if clusters is not None:
-            return clusters
+        if cluster is not None:
+            return cluster
+
+        if rejection_reasons:
+            retry_feedback = rejection_reasons
+            log(
+                f"    📝 Sending {min(len(retry_feedback), MAX_RETRY_FEEDBACK_ITEMS)} "
+                "validation reason(s) to the model on retry"
+            )
+
+        if attempt == MAX_GENERATION_ATTEMPTS:
+            log(
+                f"    ❌ {cluster_id} failed after {MAX_GENERATION_ATTEMPTS} "
+                "attempts; continuing with the next id"
+            )
+            return None
 
         log(f"    ⚠️  Attempt {attempt} failed. Retrying in {wait}s...")
         time.sleep(wait)
@@ -419,7 +676,24 @@ def load_checkpoint():
     try:
         with open(CHECKPOINT_PATH, "r", encoding="utf-8") as f:
             data = json.load(f)
-        completed = {cat["id"]: cat for cat in data.get("categories", [])}
+        configured = {category["id"]: category for category in CATEGORIES}
+        completed = {}
+        for cat in data.get("categories", []):
+            category = configured.get(cat.get("id"))
+            if not category:
+                continue
+
+            clusters = clean_checkpoint_clusters(category, cat.get("clusters", []))
+            if not clusters:
+                log(f"    ⚠️  Checkpoint topic {cat['id']} has no valid clusters; regenerating it")
+                continue
+
+            completed[cat["id"]] = {
+                "id": category["id"],
+                "name": category["name"],
+                "icon": category["icon"],
+                "clusters": clusters,
+            }
         log(f"💾 Checkpoint loaded: {len(completed)} categories already done")
         for cat_id, cat in completed.items():
             n_c = len(cat["clusters"])
@@ -450,6 +724,27 @@ def delete_checkpoint():
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Generate or validate Spy Game words.")
+    parser.add_argument(
+        "--validate",
+        metavar="PATH",
+        help="Validate an existing words JSON file without calling the API.",
+    )
+    args = parser.parse_args()
+
+    if args.validate:
+        return 0 if validate_word_file(args.validate) else 1
+
+    global TOKEN
+    TOKEN = load_token()
+    if not TOKEN:
+        print(
+            "[ERROR] MiniMax API Token is missing! Please set MINIMAX_API_KEY "
+            "or define it in a .env file.",
+            file=sys.stderr,
+        )
+        return 1
+
     from math import comb
 
     start_time = time.time()
@@ -463,9 +758,9 @@ def main():
 
     # Load checkpoint
     completed = load_checkpoint()
-    skipped = len(completed)
-    if skipped > 0:
-        log(f"⏩ Resuming — skipping {skipped} already completed categories")
+    restored = len(completed)
+    if restored > 0:
+        log(f"⏩ Resuming with valid clusters from {restored} saved topics")
     print(f"{'═' * 60}", flush=True)
 
     total_clusters = sum(len(c["clusters"]) for c in completed.values())
@@ -474,25 +769,60 @@ def main():
     )
 
     for i, cat in enumerate(CATEGORIES):
-        # Skip if already in checkpoint
-        if cat["id"] in completed:
+        cluster_target = expected_cluster_count(cat)
+        existing_entry = completed.get(cat["id"])
+        clusters_by_id = {
+            cluster["id"]: cluster
+            for cluster in (existing_entry or {}).get("clusters", [])
+        }
+        missing_numbers = [
+            number
+            for number in range(1, cluster_target + 1)
+            if f"{cat['id']}_{number:02d}" not in clusters_by_id
+        ]
+
+        if not missing_numbers:
             continue
 
         print(f"\n{'─' * 60}", flush=True)
         log(f"📂 [{i + 1}/{total_cats}] {cat['icon']}  {cat['name']}")
         log(f"    {progress_bar(i, total_cats)}")
+        if clusters_by_id:
+            log(
+                f"    Keeping {len(clusters_by_id)} valid saved cluster(s); "
+                f"generating {len(missing_numbers)} missing id(s)"
+            )
 
         cat_start = time.time()
-        clusters = call_api_with_retry(cat)
+        for cluster_number in missing_numbers:
+            cluster_id = f"{cat['id']}_{cluster_number:02d}"
+            log(f"    Generating {cluster_id} ({cluster_number}/{cluster_target})")
+            cluster = call_api_with_retry(cat, cluster_number, cluster_target)
+            if cluster is not None:
+                clusters_by_id[cluster_id] = cluster
+                log(f"    Accepted {cluster_id}")
+
+            if cluster_number != missing_numbers[-1]:
+                time.sleep(1)
+
+        clusters = [
+            clusters_by_id[f"{cat['id']}_{number:02d}"]
+            for number in range(1, cluster_target + 1)
+            if f"{cat['id']}_{number:02d}" in clusters_by_id
+        ]
+        if not clusters:
+            log(f"    No valid clusters generated for {cat['name']}; skipping topic")
+            continue
 
         # Log results
         n_clusters = len(clusters)
         n_words = sum(len(c["words"]) for c in clusters)
-        total_clusters += n_clusters
-        total_words += n_words
 
         cat_elapsed = time.time() - cat_start
-        log(f"    ✅ {n_clusters} clusters, {n_words} words ({cat_elapsed:.1f}s)")
+        log(
+            f"    ✅ Kept {n_clusters}/{cluster_target} clusters, "
+            f"{n_words} words ({cat_elapsed:.1f}s)"
+        )
 
         for c in clusters:
             words_preview = ", ".join(c["words"][:4])
@@ -507,9 +837,14 @@ def main():
         }
         completed[cat["id"]] = cat_entry
 
-        # Save checkpoint after each category
+        # Save checkpoint after every attempted topic, including partial successes.
         save_checkpoint(completed)
         log(f"    💾 Checkpoint saved ({len(completed)}/{total_cats})")
+        total_clusters = sum(len(c["clusters"]) for c in completed.values())
+        total_words = sum(
+            sum(len(cluster["words"]) for cluster in c["clusters"])
+            for c in completed.values()
+        )
         log(f"    📊 Running total: {total_clusters} clusters, {total_words} words")
 
         # Small delay to avoid rate limits
@@ -526,7 +861,11 @@ def main():
         ],
     }
 
-    # Write final output
+    if not validate_word_data(output, "generated output"):
+        log("❌ Generated output unexpectedly failed validation")
+        return 1
+
+    # Write final output only after the complete set has passed validation.
     output_path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "..", "data", "words.json"
     )
@@ -581,7 +920,8 @@ def main():
         flush=True,
     )
     print(f"\n✅ Done!", flush=True)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
